@@ -1,0 +1,15 @@
+<div class="loader_afterload {{finish_load}}">
+    <div class="breadcrumbs">
+        <div><a href="/#/">GameBoard</a></div>
+        <div class="arrow"></div>
+        <div>Report {{copyData.appCopyID}} ::: "{{copyData.appCopyName}}" Game </div>
+        <div class="switch" ng-show="copyData.appCopyTerminate==0"><a href='/#/editGame/{{appData.appID}}/{{copyData.appCopyID}}'>Switch to edit game</a></div>
+        <br class="clr" />
+    </div>
+    <div class="createGameTopBar">
+    </div>
+    <div class="create_game_wrapper" ng-include="template"></div>
+</div>
+<div class="loader_beforeload {{finish_load}}">
+    <img src="img/wait_ge.gif" />
+</div>

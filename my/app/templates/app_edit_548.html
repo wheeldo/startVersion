@@ -1,0 +1,123 @@
+<div class="app_edit_container payItForwarEdit" ng-init="initPayItForward()">
+    <div class="nav_top">
+        <a href="javascript:void(0);" class="edit" ng-click="settingsShow()">Settings</a>
+        <a href="javascript:void(0);" class="edit" ng-click="advancedShow()">Edit email content</a>
+        <a href="javascript:void(0);" class="add" ng-click="addPlayerToGame()" ng-show="showAddPlayer">Add player</a>
+        <a href="javascript:void(0);" class="load" ng-click="loadPreviousGames()" ng-show="copyData.appCopyTerminate">Load from previous Game</a>
+        <br class="clr" />
+    </div>
+    <div class="advanced_data">
+        <form role="form">
+            <legend>Enter text for the email that is sent at the beginning of the game:</legend>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Header</label>
+                <input type="text" class="form-control autoSave" id="email_starter_headline" ng-model="editData.game_info.email_starter_headline">
+            </div>
+            <div class="form-group">
+                <div class="form_left">
+                    <label for="exampleInputEmail1">Cube 1 (top left)</label>
+                    <input type="text" class="form-control autoSave" id="email_starter_cube_1_header" ng-model="editData.game_info.email_starter_cube_1_header">
+                    <textarea class="form-control autoSave" rows="4" id="email_starter_cube_1" ng-model="editData.game_info.email_starter_cube_1"></textarea>
+                </div>
+                <div class="form_right">
+                    <label for="exampleInputEmail1">Cube 2 (top right)</label>
+                    <input type="text" class="form-control autoSave" id="email_starter_cube_2_header" ng-model="editData.game_info.email_starter_cube_2_header">
+                    <textarea class="form-control autoSave" rows="4" id="email_starter_cube_2" ng-model="editData.game_info.email_starter_cube_2"></textarea>
+                </div>
+                <br class="clr" />
+            </div>
+            <div class="form-group">
+                <div class="form_left">
+                    <label for="exampleInputEmail1">Cube 3 (bottom left)</label>
+                    <input type="text" class="form-control autoSave" id="email_starter_cube_3_header" ng-model="editData.game_info.email_starter_cube_3_header">
+                    <textarea class="form-control autoSave" rows="4" id="email_starter_cube_3" ng-model="editData.game_info.email_starter_cube_3"></textarea>
+                </div>
+                <div class="form_right">
+                    <label for="exampleInputEmail1">Cube 4 (bottom right)</label>
+                    <input type="text" class="form-control autoSave" id="email_starter_cube_4_header" ng-model="editData.game_info.email_starter_cube_4_header">
+                    <textarea class="form-control autoSave" rows="4" id="email_starter_cube_4" ng-model="editData.game_info.email_starter_cube_4"></textarea>
+                </div>
+                <br class="clr" />
+            </div>
+        </form>
+
+        <form role="form">
+            <legend>Enter text for the email that is sent during the game:</legend>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Header</label>
+                <input type="text" class="form-control autoSave" id="email_forward_headline" ng-model="editData.game_info.email_forward_headline">
+            </div>
+            <div class="form-group">
+                <div class="form_left">
+                    <label for="exampleInputEmail1">Cube 1 (top left)</label>
+                    <input type="text" class="form-control autoSave" id="email_forward_cube_1_header" ng-model="editData.game_info.email_forward_cube_1_header">
+                    <textarea class="form-control autoSave" rows="4" id="email_forward_cube_1" ng-model="editData.game_info.email_forward_cube_1"></textarea>
+                </div>
+                <div class="form_right">
+                    <label for="exampleInputEmail1">Cube 2 (top right)</label>
+                    <input type="text" class="form-control autoSave" id="email_forward_cube_2_header" ng-model="editData.game_info.email_forward_cube_2_header">
+                    <textarea class="form-control autoSave" rows="4" id="email_forward_cube_2" ng-model="editData.game_info.email_forward_cube_2"></textarea>
+                </div>
+                <br class="clr" />
+            </div>
+            <div class="form-group">
+                <div class="form_left">
+                    <label for="exampleInputEmail1">Cube 3 (bottom left)</label>
+                    <input type="text" class="form-control autoSave" id="email_forward_cube_3_header" ng-model="editData.game_info.email_forward_cube_3_header">
+                    <textarea class="form-control autoSave" rows="4" id="email_forward_cube_3" ng-model="editData.game_info.email_forward_cube_3"></textarea>
+                </div>
+                <div class="form_right">
+                    <label for="exampleInputEmail1">Cube 4 (bottom right)</label>
+                    <input type="text" class="form-control autoSave" id="email_forward_cube_4_header" ng-model="editData.game_info.email_forward_cube_4_header">
+                    <textarea class="form-control autoSave" rows="4" id="email_forward_cube_4" ng-model="editData.game_info.email_forward_cube_4"></textarea>
+                </div>
+                <br class="clr" />
+            </div>
+        </form>
+    </div>
+    <div class="settings_wrap">
+        <h3>Settings: <img class="help" src="/img/help_icon30_30.png" popover='At the beginning of the game, 50% of players will get a box. Every day, new boxes will be sent automatically. A day before the end date, the participants that did not get a box during the game will automatically get boxes.'  popover-placement="right" popover-trigger="mouseenter" /></h3>
+        <div class="after_start_data" ng-show="editData.game_info.start>0">
+            <label>Start Time:</label>
+            <input type="text" readonly="" ng-model="editData.ex_info.start_time_str" />
+        </div>
+        <div>
+            <label>End Date:</label>
+            <input type="text" datepicker-popup="MM/dd/yyyy" ng-change="dateChanged()" ng-model="editData.ex_info.end_time_date" is-open="cal_opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" />
+        </div>
+        <div>
+            <label>End Time:</label>
+            <div ng-model="editData.ex_info.end_time_time" ng-change="dateChanged()" class="well well-small" style="display:inline-block;">
+                <timepicker hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+            </div>
+        </div>
+    </div>
+    <div class="questions_wrap">
+        <h3>Write tips or insights for your team to choose and share with their peers: <img class="help" src="/img/help_icon30_30.png" popover='When employees are passing a box, they choose a tip, insight, piece of information from a drop down list you create. They then write a personal comment to the player who receives the box.'  popover-placement="right" popover-trigger="mouseenter" /></h3>
+        <div class="q_wrap" ng-repeat="tip in editData.tips" repeat-done="bindQuize()">
+            <div class="q_visible">
+                <span class="order">
+                    <a href="javascript:void(0)"><img src="img/up.gif" /></a>
+                    <a href="javascript:void(0)"><img src="img/down.gif" /></a>
+                </span>
+                <span class="index">{{$index+1}}</span>
+                <span class="question">{{tip.text}}</span>
+                <span class="remove"><a href="javascript:void(0);" ng-click="removeTipPIF($index)">Remove</a></span>
+
+            </div>
+        </div>
+        
+        <div class="q_wrap">
+            
+            <div class="q_visible">
+                <span class="order">
+
+                </span>
+                <span class="index"></span>
+                <span class="question"><input class="inputMark" type="text" placeholder="e.g. Check your email once a day" ng-model="new_tip" id="new_tip" ng-minlength=3 ng-maxlength=60 maxlength="60" required /></span>
+                <span class="remove"><a href="javascript:void(0);" ng-click="addTipPIF()">Add</a></span>
+                
+            </div>
+        </div>
+    </div>
+</div>

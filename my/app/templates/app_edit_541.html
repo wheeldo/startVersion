@@ -1,0 +1,60 @@
+<div class="app_edit_container" ng-init="initTrivia(true)">
+    <div class="nav_top">
+        <a href="javascript:void(0);" class="add" ng-click="addTriviaQuestion(true)">Add a new question</a>
+        <a href="javascript:void(0);" class="upload" ng-click="uploadCsvFileTrivia()">Upload questions file</a>
+        <a href="javascript:void(0);" class="add" ng-click="addPlayerToGame()" ng-show="showAddPlayer">Add player</a>
+        <a href="javascript:void(0);" class="team" ng-click="teamOptionsOpen()" ng-show="copyData.appCopyTerminate==0">Resend invitation</a>
+        <a href="javascript:void(0);" class="load" ng-click="loadPreviousGames()">Load previous game</a>
+        <br class="clr" />
+    </div>
+    <div class="">
+        Link to the game: <a target="_blank" href="http://hr.amdocs.com/w/CES9/login/{{copyData.appCopyID}}">http://hr.amdocs.com/w/CES9/login/{{copyData.appCopyID}}</a>
+    </div>
+    <h4 ng-show="editData.quiz.length>0">Questions:</h4>
+    <div class="questions_wrap" ng-show="editData.quiz.length>0">
+        
+        <div class="q_wrap" ng-repeat="q in editData.quiz" repeat-done="bindQuize()">
+            <div class="q_visible">
+                <span class="order">
+                    <a href="javascript:void(0)"><img src="img/up.gif" /></a>
+                    <a href="javascript:void(0)"><img src="img/down.gif" /></a>
+                </span>
+                <span class="index">{{$index+1}}</span>
+                <span class="question">{{q.q_data.question}}</span>
+                <span class="show_options" q_hidden="{{$index}}">
+                    <a href="javascript:void(0);">options</a>
+                </span>
+                <span class="bonus" ng-show="q.q_data.is_bonus=='Y' || q.q_data.is_bonus=='1'">Bonus</span>
+                <span class="remove"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="removeQTrivia($index)">Remove</a></span>
+                <span class="edit"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="editQTrivia($index)">Edit</a></span>
+                
+            </div>
+            <div class="q_hidden" q_hidden="{{$index}}">
+                <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='A']" ng-show="q.q_data.A.length"><label>1.</label>{{q.q_data.A}}<br class="clr" /></div>
+                <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='B']" ng-show="q.q_data.B.length"><label>2.</label>{{q.q_data.B}}<br class="clr" /></div>
+                <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='C']" ng-show="q.q_data.C.length"><label>3.</label>{{q.q_data.C}}<br class="clr" /></div>
+                <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='D']" ng-show="q.q_data.D.length"><label>4.</label>{{q.q_data.D}}<br class="clr" /></div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .general_details {
+        margin:10px 0px;
+    }
+    
+    #m_email {
+        margin:5px 0px;
+        width:730px;
+    }
+    
+    h4 {
+        margin:5px 0px;
+    }
+    
+    .questions_wrap.waiting_for_approval,
+    .questions_wrap.waiting_for_approval .q_wrap {
+        border-color:red;
+    }
+    
+</style>

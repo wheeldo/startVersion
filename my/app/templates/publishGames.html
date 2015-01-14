@@ -1,0 +1,191 @@
+<div id="publishGameModal" class="addEditQuestion" ng-init="initCtrl();" ng-cloak="testMe()">
+    <div class="wait_for_publish">
+        <img src="img/ajax-loader-large.gif" />
+        <br class="clr" />
+        <div>Great job! Your team will love this game</div>
+    </div>
+    <h3>Publish '{{copyData.appCopyName}}'</h3>
+    <div class="middle">
+        <table class="recipients">
+            <tr>
+                <th>Recipients:</th>
+                <td class="recipients_th"><input type="radio" value="new" name="recipients" checked="checked" /> New team</td>
+                <td class="recipients_th"><input type="radio" value="exist" name="recipients" /> Existing team</td>
+                <td class="recipients_th"><input type="radio" value="file" name="recipients" /> Load players from file <span style="font-size:11px;">(<a href="getFile/WheeldoTeamFileExample.csv" class="download_example_file" target="_blank">Download example file</a>)</span></td>
+            </tr>
+        </table>
+
+        <div class="team_wrap">
+            <div class="new choose_recipients">
+                <div class="left">
+                    <input class="autoTxT" type="text" placeholder="Enter a name for your new team" name="text" id="new_team_name" ng-model="new_team.name"  ng-minlength=3 ng-maxlength=90 maxlength="90" required ng-focus  />
+                </div>
+                <div class="right">
+                    This team has a total of: <br />
+                    <span class="team_num">0</span> Players <a class="show_team_members" screen="new" href="javascript:void(0)">Show</a>
+                </div>
+                 <br class="clr" />
+                 <div class="team_members">
+                 </div>
+                <div>
+                    <table style="width:100%;">
+                        <tr>
+                            <td><input type="text" class="autoTxT" id="new_team_player_name" placeholder="Player's name" ng-model="new_player.name"  ng-minlength=3 ng-maxlength=90 maxlength="90" required ng-focus /></td>
+                            <td><input type="text" class="autoTxT" id="new_team_player_email" placeholder="Player's email" ng-model="new_player.email"  ng-minlength=3 ng-maxlength=90 maxlength="90" required ng-focus /></td>
+                            <td style="padding-left:10px;width:180px;"><a href="javascript:add_new_player()" ng-click="addPlayer()" class="add_player">Add player to team</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="exist choose_recipients">
+                <div class="left">
+<!--                        <select id="selected_team" ng-model="selectedTeam" name="selectedTeam" ng-change="setSelectTeamChange()">
+                                <option value="0_0">Select a team</option>
+                                <option  ng-repeat="team in teamsList" value="{{team.teamID}}">{{team.teamName}}</option>
+                        </select>-->
+
+                <div class="team_select_wrap custom_select" custom_select="width:500px;height:24px;">
+                    <a href="javascript:void(0)" class="open_a"></a>
+                    <div class="label"><span class="text">Please select team:</span> <div class="arrow"><img src="/img/sarr.png" /></div></div>
+                    <div class="options_wrap">
+                        <div class="option" ng-repeat="team in teamsList" data_value="{{team.teamID}}" data_label="{{team.teamName}}" repeat-done="initSelect()">{{team.teamName}}</div>
+                    </div>
+                    <input type="hidden" ng-model="selectedTeam" id="selected_team" value="0" />
+                </div>
+
+                <style>
+                    .custom_select {
+                        margin-top:4px;
+                        height:24px;
+                        width:100%;
+                        cursor:pointer;
+                    }
+                    
+                    .custom_select .open_a {
+                        height:26px;
+                        width:100%;
+                        position:absolute;
+                        left:0px;
+                        top:0px;
+
+                        z-index:2000;
+                    }
+                    
+                    .custom_select .label .arrow{
+                        border-left:1px solid #ABABAB;
+                        width:20px;
+                        height:24px;
+                        position:absolute;
+                        right:0px;
+                        top:0px;
+                        background: #f5f5f5; /* Old browsers */
+                        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+                        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y1ZjVmNSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlOGU4ZTgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+                        background: -moz-linear-gradient(top,  #f5f5f5 0%, #e8e8e8 100%); /* FF3.6+ */
+                        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#e8e8e8)); /* Chrome,Safari4+ */
+                        background: -webkit-linear-gradient(top,  #f5f5f5 0%,#e8e8e8 100%); /* Chrome10+,Safari5.1+ */
+                        background: -o-linear-gradient(top,  #f5f5f5 0%,#e8e8e8 100%); /* Opera 11.10+ */
+                        background: -ms-linear-gradient(top,  #f5f5f5 0%,#e8e8e8 100%); /* IE10+ */
+                        background: linear-gradient(to bottom,  #f5f5f5 0%,#e8e8e8 100%); /* W3C */
+                        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#e8e8e8',GradientType=0 ); /* IE6-8 */
+                        text-align:center;
+                    }
+                    
+                    .custom_select .label {
+                        height:24px;
+                        line-height:24px;
+                        width:98%;
+                        border:1px solid #ABABAB;
+                        padding:0px 1%;
+                        background-color:#ffffff;
+                        color:#333333;
+                        text-shadow: none;
+                        font-weight:normal;
+                        
+                    }
+                    
+                    .custom_select .options_wrap {
+                        width:100%;
+                        display:none;
+                        position:absolute;
+                        top:25px;
+                        background-color:#ffffff;
+                        max-height:300px;
+                        overflow-x: hidden;
+                        overflow-y: auto;
+                        z-index:2000;
+                        border:1px solid #ABABAB;
+                    }
+                    
+                    .custom_select .options_wrap .option {
+                        width:98%;
+                        padding:0px 1%;
+                    }
+                    
+                    .custom_select .options_wrap .option:hover {
+                        background-color:gray;
+                        
+                    }
+                </style>
+                </div>
+                <div class="right">
+                    This team has a total of: <br />
+                    <span class="team_num">0</span> Players <a class="show_team_members" screen="exist" href="javascript:void(0)">Show</a>
+                </div>
+                 <br class="clr" />
+                 <div class="team_members">
+                     some data
+                 </div>
+            </div>
+            <div class="file choose_recipients">
+                <div class="left">
+                    <input type="text" class="autoTxT" id="file_team_name" title="Enter a name for your new team" />
+                </div>
+                <div class="right">
+                    This team has a total of: <br />
+                    <span class="team_num">0</span> Players <a class="show_team_members" screen="file" href="javascript:void(0)">Show</a>
+                </div>
+                 <br class="clr" />
+                 <div class="team_members">
+                 </div>
+                <div>
+                    <form id="team_upload_form" method="post" enctype="multipart/form-data" action="ajax/upload_team.php" onsubmit="set_ajax_load()">
+                        <table style="width:100%;">
+                            <tr>
+                                <td>
+                                    <input type="file" name="csv" id="file" class="customfile-input">
+                                </td>
+                                <td style="width:150px;padding-left:10px;">
+                                    <input type="submit" value="Upload" class="upload-button" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                    <iframe id="upload_team_target" name="upload_team_target" onload="uploadTeamDone()" src="" style="width:0;height:0;border:0px solid #fff;"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="email_content" ng-switch on="copyData.appCopyAutoEmail==1">
+            <div ng-switch-when="true">
+                <h4>Email Content: 
+                    
+                    <div class="language" style="float:right;">
+                        <select ng-change="email_lang_changed()" ng-model="email_lang" ng-options='option.code as option.name for option in email_langs'></select>
+                    </div>
+                    <input type="hidden" id="email_lang" value="{{email_lang}}" />                    
+                </h4>
+                <input type="text" class="autoTxT" id="email_subject" placeholder="Enter the subject of the mail" ng-model="email_subject" ng-minlength=3 ng-maxlength=90 maxlength="90" required ng-focus />
+                <textarea id="email_content" class="autoTxT" ng-model="email_content" ng-minlength=3 required ng-focus ng-bind-html-unsafe="email_content" ng-init="initCKEmail('email_content')" ></textarea>
+            </div>
+            <div ng-switch-default>
+                <input type="hidden" id="email_subject" value="Default" />
+                <input type="hidden" id="email_content" value="Default" />
+            </div>
+        </div>
+    </div>
+    <div class="actions_wrap" content-load="contentLoad()">
+         <button type="button" class="system_button blue_button" style="float:left;" ng-click="cancel()">Cancel</button>
+         <button type="button" class="system_button green_button publish event_log" id="publish_button" style="float:right;" log_type="publish_game" log_more="App Name: {{}},CopyID: {{copyID}}" ng-click="publish()">Publish</button>
+         <br class="clr" />
+    </div>
+</div>

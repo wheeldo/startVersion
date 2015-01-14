@@ -1,0 +1,96 @@
+<form  name="q_form">
+<div id="addQuestion" class="addEditQuestion" ng-init="initCtrl();" ng-cloak="testMe()">
+    <h3>Add a Question
+        <button type="button" class="system_button green_button" style="float:right;" ng-click="saveAddQuestionTrivia()">{{save_text}}</button>
+        <button type="button" class="system_button blue_button" style="float:right;margin-right:10px;" ng-click="cancel()">Cancel</button>
+         
+    </h3>
+    <div class="question">
+        <input class="inputMark" type="text"  tabindex="1" placeholder="Enter your question here" name="question" id="question" ng-model="q.question"  ng-minlength=3 ng-maxlength=9000 maxlength="9000" required ng-focus value="{{q.question}}" />
+    </div>
+    <div class="bonus checkbox {{show_bonus}}" ng-class="{'checked':(q.is_bonus=='Y' || q.is_bonus=='1')}">
+        <input type="hidden" class="checkbox_input" id="bonus" ng-click="checkBonus()" ng-model="q.is_bonus" ng-true-value="Y" ng-false-value="N" value="{{q.is_bonus}}" />
+        This is a bonus question
+    </div>
+    <div class="answers_wrap">
+        <input type="hidden" id="answer" value="{{q.answer}}" />
+        <div class="answer" answer="A" ng-class="{true:'valid'}[q.A!='']">
+            <span class="wrongWright right" answer="A"></span>
+            <input class="inputMark" type="text" tabindex="2" placeholder="Add an answer" name="A" id="A" ng-model="q.A"  ng-minlength=1 ng-maxlength=9000 maxlength="9000" required ng-focus />
+            <span class="order">
+                <a href="javascript:void(0)" class="moveUp"><img src="img/up.gif" /></a>
+                <a href="javascript:void(0)" class="moveDown"><img src="img/down.gif" /></a>
+            </span>
+<!--            <span class="remove"><a href="javascript:void(0);">Remove</a></span>-->
+        </div>
+        <div class="answer" answer="B" ng-class="{true:'valid'}[q.B!='']">
+            <span class="wrongWright" answer="B"></span>
+            <input class="inputMark" type="text" tabindex="3" placeholder="Add an answer" name="B" id="B" ng-model="q.B"  ng-minlength=1 ng-maxlength=9000 maxlength="9000" required ng-focus />
+            <span class="order">
+                <a href="javascript:void(0)" class="moveUp"><img src="img/up.gif" /></a>
+                <a href="javascript:void(0)" class="moveDown"><img src="img/down.gif" /></a>
+            </span>
+<!--            <span class="remove"><a href="javascript:void(0);">Remove</a></span>-->
+        </div>
+        <div class="answer" answer="C" ng-class="{true:'valid'}[q.C!='']">
+            <span class="wrongWright" answer="C"></span>
+            <input class="inputMark" type="text" tabindex="4" placeholder="Add an answer" name="C" id="C" ng-model="q.C"  ng-minlength=1 ng-maxlength=9000 maxlength="9000" required ng-focus />
+            <span class="order">
+                <a href="javascript:void(0)" class="moveUp"><img src="img/up.gif" /></a>
+                <a href="javascript:void(0)" class="moveDown"><img src="img/down.gif" /></a>
+            </span>
+<!--            <span class="remove"><a href="javascript:void(0);">Remove</a></span>-->
+        </div>
+        <div class="answer" answer="D" ng-class="{true:'valid'}[q.D!='']">
+            <span class="wrongWright" answer="D"></span>
+            <input class="inputMark" type="text" tabindex="5" placeholder="Add an answer" name="D" id="D" ng-model="q.D"  ng-minlength=1 ng-maxlength=9000 maxlength="9000" required ng-focus />
+            <span class="order">
+                <a href="javascript:void(0)" class="moveUp"><img src="img/up.gif" /></a>
+                <a href="javascript:void(0)" class="moveDown"><img src="img/down.gif" /></a>
+            </span>
+<!--            <span class="remove"><a href="javascript:void(0);">Remove</a></span>-->
+        </div>
+        
+    </div>
+    
+    
+     <hr />
+    
+    <div class="more" ng-hide="hide_more">
+        <label>Share information about this question: <img class="help" src="/img/help_icon30_30.png" popover='The players that answer this question incorrect will see this information.'  popover-placement="right" popover-trigger="mouseenter" /></label>
+        <textarea ng-model="q.extra" id="extra"></textarea>
+    </div>
+
+    <div class="more" ng-hide="hide_more">
+        <label>Add a link for more information about this question: <img class="help" src="/img/help_icon30_30.png" popover='The players that answer this question incorrect will be able to read more via this link.'  popover-placement="right" popover-trigger="mouseenter" /></label>
+        <input type="text" ng-model="q.more_link" id="more_link" />
+    </div>
+    
+    <div class="actions_wrap" content-load="contentLoad()">
+         <button type="button" class="system_button blue_button" style="float:left;" ng-click="cancel()">Cancel</button>
+         <button type="button" tabindex="6" class="system_button green_button" style="float:right;" ng-click="saveAddQuestionTrivia()">{{save_text}}</button>
+    </div>
+    
+</div>
+    
+</form>
+
+<style>
+    .more {
+        margin-top:10px;
+    }
+    
+    .more textarea {
+        width: 720px;
+        resize:none;
+        height:50px;
+        line-height:16px;
+        font-size:12px;
+    }
+    
+    .more input {
+        width: 720px;
+        line-height:16px;
+        font-size:12px;
+    }
+</style>

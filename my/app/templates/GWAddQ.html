@@ -1,0 +1,116 @@
+<form name="q_form">
+    
+    <div class="addEditQuestion" ng-init="initCtrl();">
+        <h3>Add Question
+            <button type="button" class="system_button green_button" style="float:right;" ng-click="saveAddQuestionGW()">{{save_text}}</button>
+            <button type="button" class="system_button blue_button" style="float:right;margin-right:10px;" ng-click="cancel()">Cancel</button>
+            <br class="clr" />
+        </h3>
+        <br class="clr" />
+        <div>
+            <label>Select from 5 different types of responses to your questions:</label>
+            
+            <select ng-model="q.type" name="q_type" id="q_type" ng-options="val.id as val.name for val in q_types" ng-change="loadQForm()" ng-init="TypesLoaded()">
+
+            </select>
+
+        </div>
+        
+        <div class="text_question">
+            
+            <input class="inputMark" type="text" placeholder="Enter your instruction here" name="text" id="text" ng-model="q.text"  ng-minlength=3 ng-maxlength=600 maxlength="600" required ng-focus  />
+            <br class="clr" />
+        </div>
+        
+        <div class="type_wrapper" data_type="1">
+            <h4>Your team will be able to rate the sentence between 1-100.</h4>
+            <br class="clr" />
+        </div>
+        <div class="type_wrapper" data_type="2">
+            <label class="values_options" ng-repeat="value in q.values">{{value.text}} <a href="javascript:void(0);" ng-click="q.values.splice($index, 1)"><img src="img/del_icon.png" /></a></label>
+            <div class="new_val" ng-show="q.values.length<12">
+                <input class="inputMark" type="text" placeholder="Enter your value" name="new_value" id="new_value" ng-model="new_value" ng-minlength=3 ng-maxlength=50 maxlength="50" required ng-focus  />
+                <button type="button" class="btn btn-primary" ng-disabled="!q_form.new_value.$valid" ng-click="addValue()">Add</button>
+            </div>
+            <br class="clr" />
+            <h4 style="margin:5px 0px;">Your team will be able to rate values to three sections: low, medium, high.</h4>
+            
+            <br class="clr" />
+        </div>
+        <div class="type_wrapper" data_type="3">
+            <label class="values_options" ng-repeat="option in q.options">{{option.text}} <a href="javascript:void(0);" ng-click="q.options.splice($index, 1)"><img src="img/del_icon.png" /></a></label>
+            <div class="new_val" ng-show="q.options.length<8">
+                <input class="inputMark" type="text" placeholder="Enter your option" name="new_option" id="new_option" ng-model="new_option" ng-minlength=3 ng-maxlength=50 maxlength="50" required ng-focus  />
+                <button type="button" class="btn btn-primary" ng-disabled="!q_form.new_option.$valid" ng-click="addOption()">Add</button>
+            </div>
+            <br class="clr" />
+            <h4 style="margin:5px 0px;">Your team will be able to choose between a few values.</h4>
+            <br class="clr" />
+        </div>
+        
+        <div class="type_wrapper" data_type="4">
+            <div class="condition_wrap">
+                <label>Condition value (0-100) - if (user value > value)</label>
+                <input class="inputMark" type="text" placeholder="(e.g. 50)" name="q.condition.value" id="value" ng-model="q.condition.value" ng-minlength=1 ng-maxlength=2 maxlength="2" required ng-focus  />
+                <br class="clr" />
+            </div>
+            <div class="condition_wrap">
+                <label>If true instruction</label>
+                <input class="inputMark" type="text" placeholder="Instruction" name="instruction_true" id="instruction_true" ng-model="q.condition.instruction_true" ng-minlength=3 ng-maxlength=600 maxlength="600" required ng-focus  />
+                <br class="clr" />
+            </div>
+            <div class="condition_wrap">
+                <label>If false instruction</label>
+                <input class="inputMark" type="text" placeholder="Instruction" name="instruction_false" id="instruction_false" ng-model="q.condition.instruction_false" ng-minlength=3 ng-maxlength=600 maxlength="600" required ng-focus  />
+                <br class="clr" />
+            </div>
+            <br class="clr" />
+            <h4 style="margin:5px 0px;">You can pose a rating question and based on the answers given, the players will then be directed to another rating question The player will be asked another score questions. 1 to 100 by 1 to 100</h4>
+            <br class="clr" />
+        </div>
+        
+        <div class="type_wrapper" data_type="5">
+            <div class="condition_wrap">
+                <label>Condition value (0-100) - if (user value > value)</label>
+                <input class="inputMark" type="text" placeholder="(e.g. 50)" name="q.conditionMultiSelect.value" id="MultiSelectValue" ng-model="q.conditionMultiSelect.value" ng-minlength=1 ng-maxlength=2 maxlength="2" required ng-focus  />
+                <br class="clr" />
+            </div>
+            <div class="condition_wrap">
+                <label>If true instruction</label>
+                <input class="inputMark" type="text" placeholder="Instruction" name="instructionMultiSelect_true" id="instructionMultiSelect_true" ng-model="q.conditionMultiSelect.instruction_true" ng-minlength=3 ng-maxlength=600 maxlength="600" required ng-focus  />
+                <br class="clr" />
+                <br class="clr" />
+                <label class="values_options" ng-repeat="option in q.conditionMultiSelect.options_true">{{option.text}} <a href="javascript:void(0);" ng-click="q.conditionMultiSelect.options_true.splice($index, 1)"><img src="img/del_icon.png" /></a></label>
+                <div class="new_val" ng-show="q.conditionMultiSelect.options_true.length<8">
+                    <input class="inputMark" type="text" placeholder="Enter your option" name="new_condition_options_true" id="new_condition_options_true" ng-model="new_condition_options_true" ng-minlength=3 ng-maxlength=50 maxlength="50" required ng-focus  />
+                    <button type="button" class="btn btn-primary" ng-disabled="!q_form.new_condition_options_true.$valid" ng-click="addConditionTrueOption()">Add</button>
+                </div>
+                <br class="clr" />
+            </div>
+            <div class="condition_wrap">
+                <label>If false instruction</label>
+                <input class="inputMark" type="text" placeholder="Instruction" name="instructionMultiSelect_false" id="instructionMultiSelect_false" ng-model="q.conditionMultiSelect.instruction_false" ng-minlength=3 ng-maxlength=600 maxlength="600" required ng-focus  />
+                <br class="clr" />
+                <br class="clr" />
+                <label class="values_options" ng-repeat="option in q.conditionMultiSelect.options_false">{{option.text}} <a href="javascript:void(0);" ng-click="q.conditionMultiSelect.options_false.splice($index, 1)"><img src="img/del_icon.png" /></a></label>
+                <div class="new_val" ng-show="q.conditionMultiSelect.options_false.length<8">
+                    <input class="inputMark" type="text" placeholder="Enter your option" name="new_condition_options_false" id="new_condition_options_false" ng-model="new_condition_options_false" ng-minlength=3 ng-maxlength=50 maxlength="50" required ng-focus  />
+                    <button type="button" class="btn btn-primary" ng-disabled="!q_form.new_condition_options_false.$valid" ng-click="addConditionFalseOption()">Add</button>
+                </div>
+                <br class="clr" />
+                <br class="clr" />
+            </div>
+            <br class="clr" />
+            <h4 style="margin:5px 0px;">You can pose a rating question and based on the answer, the player will be asked another multiple choice question.</h4>
+            <br class="clr" />
+        </div>
+        
+        
+        
+        <div class="actions_wrap" content-load="contentLoad()">
+            <button type="button" class="system_button blue_button" style="float:left;" ng-click="cancel()">Cancel</button>
+            <button type="button" class="system_button green_button" style="float:right;" ng-click="saveAddQuestionGW()">{{save_text}}</button>
+        </div>
+    </div>
+    
+</form>

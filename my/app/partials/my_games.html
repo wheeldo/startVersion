@@ -1,0 +1,474 @@
+<div class="loader_afterload {{finish_load}}">
+<div class="my_games_wrap" ng-init="init()">
+   <tabset>
+       <tab heading="Published Apps">
+           <div class="published_apps_wrap">
+               <div class="app">
+                   
+               </div>
+               <div class="app" ng-repeat="appCopy in published_apps">
+                   <h2>{{appCopy.appCopyName}}</h2>
+                   <div class="img_wrap"><img src="{{appCopy.icon}}" title="{{appCopy.name}}" /></div>
+                   <div class="short_info">
+                       <div class="info"><label>Copy ID:</label> {{appCopy.appCopyID}}</div>
+                       <div class="info"><label>Date:</label> {{appCopy.date}}</div>
+                       <div class="info"><label>Time:</label> {{appCopy.time}}</div>
+                       <div class="info"><label>Team:</label> {{appCopy.teamName}}</div>
+                   </div>
+                   <br class="clr" />
+                   <div class="engagment">
+                       <h5>Engagement</h5>
+                       <div class="counter" style="left:{{appCopy.engagement}}%;">{{appCopy.engagement}}%</div>
+                       <div class="fill_bar">
+                           <div class="fill" style="width:{{appCopy.engagement}}%;"></div>
+                       </div>
+                   </div>
+                   
+                   <div class="buttons">
+                     <a class="button_blue button_app" href="javascript:void(0)" ng-click="">Edit Game</a>
+                     <a class="button_blue button_app" href="javascript:void(0)">Report</a>
+                     <a class="button_red button_app" href="javascript:void(0)" ng-show="show_remove">Remove</a>
+                   </div>
+               </div>
+               <br class="clr" />
+           </div>
+       </tab>
+            <tab heading="Market">
+                <div class="market_wrap">
+                    <div class="headline">
+                        <h2>Create your game in three easy steps:</h2>
+                        1. Choose a game &nbsp;&nbsp; 2. Enter your content &nbsp;&nbsp; 3. Send it to your audience
+                        <a class="system_demo event_log wheeldoPopUp" data-type="player" player="http://player.vimeo.com/video/74559233?autoplay=1" log_more="" log_type="system_demo" href="javascript:void(0)" >Intro</a>
+                    </div>
+                    <div class="search_bar">
+                       <input type="text" class="search app_search" placeholder="Type to filter" ng-model="search" />
+                       <select id="app_category" class="nooutline">
+                           <option value="0">All game type</option>
+                           <option value="{{category.id}}" ng-repeat="category in categories">{{category.name}}</option>
+                       </select>
+                       <a href="javascript:void(0)" class="re_expand_view"></a>
+                   </div>
+                      <div class="app_cont" id="{{app.appID}}" ng-repeat="app in market_apps | filter:search" repeat-done="initMarket()">
+                        <div class="app_icon_wrap" ng-class="{private:app.appPrivate!=0,comming_soon:app.comming_soon!=0}">
+                            <img class="comming_soon_img" src="img/comming_soon.png" />
+                            <img class="private_img" src="img/private.png" title="Private apps are not available to all users" />
+                            <img class="app_img" src="{{app.icon}}" alt="{{app.name}}" title="{{app.name}}" />
+                        </div>
+                        <div class="app_info_wrap">
+                            <input type="hidden" id="app_loaded_{{app.appID}}" value="0" />
+                            <div class="left">
+                                <h2>{{app.name}}</h2>
+                                <div class="short_desc">
+                                    {{app.slogen}}
+                                </div>
+                                <div class="app_actions">
+                                    <?if(!$comming_soon || $userKind==5){?><a href="javascript:void(0)" class="button_green button_app create_game event_log" log_type="create_game" log_more="App Name: {{app.name}}" ng-click="createGame($index)">Create Game</a><?}?>
+                                    <a href="javascript:void(0)" class="app_extra learn_more event_log" app_id="{{app.appID}}" log_type="learn_more" log_more="App Name: {{app.name}}">Learn more</a>
+                                    <div class="seperator"></div>
+                                        <a ng-show="app.demoCopy!=0" class="app_extra play_now event_log" ng-click="playNow(app.appID)" href="javascript:void(0)"  log_type="demo" log_more="App Name: {{app.name}}">Play now</a>
+                                        <a ng-show="app.video!=0&&app.demoCopy==0" class="app_extra run_demo event_log wheeldoPopUp" data-type="player" href="javascript:void(0)" player="{{app.video}}" log_type="demo" log_more="App Name: {{app.name}}" >Demo</a>
+                                    <?}else{?>
+<!--                                        <a href="javascript:popText('Demo not avalibale yet...')" class="app_extra run_demo">Run demo</a>-->
+                                    <?}?>
+                                    
+                                </div>
+                            </div>
+                            <div class="right">
+                               
+                   
+                            </div>
+                            <br class="clr" />
+                        </div>
+                        <div class="more_info" id="more_info_{{app.appID}}">
+                            <div class="learn_more_arrow"></div>
+
+                        </div>
+                        <br class="clr" />
+                    </div>
+                </div>
+       </tab>
+<!--       <tab heading="My Templates">
+           
+       </tab>-->
+  </tabset>
+</div>  
+<div class="playNow">
+    <iframe id="demoIframe" src=""></iframe>
+</div>
+</div>
+<div class="loader_beforeload {{finish_load}}">
+    <img src="img/wait_ge.gif" />
+</div>
+
+<style>
+    .market_wrap {
+        padding:10px;
+    }
+    
+    .market_wrap .headline {
+        font-size:22px;
+        line-height:32px;
+    }
+    
+    .market_wrap .headline h2 {
+        font-size:24px;
+    }
+    
+    .my_games_wrap {
+        margin-top:20px;
+    }
+    
+    .nav-tabs {
+        margin:0px;
+    }
+    
+    
+    .nav-tabs li a{
+        border:1px dashed #DDDDDD;
+        cursor:pointer;
+    }
+    
+    .tab-content {
+        padding-top:10px;
+        background-color:#ffffff;
+        border:1px solid #DDDDDD;
+        border-top:0px;
+        padding:10px 5px;
+        min-height:400px;
+    }
+    
+    .published_apps_wrap {
+        width:1086px;
+
+    }
+    
+    .published_apps_wrap .app {
+        float:left;
+        border:1px solid #E5E5E5;
+        margin:10px;
+        width:229px;
+        height:225px;
+        padding:10px;
+        background-color:#fcfcfc;
+        border:1px solid #E5E5E5;
+    }
+    
+    .published_apps_wrap .app h2 {
+        font-size:14px;
+        margin:0px;
+        margin-bottom:4px;
+        height:20px;
+        line-height:20px;
+        border-bottom:1px solid #DDDDDD;
+    }
+    
+    
+    .published_apps_wrap .app .img_wrap {
+        width:100px;
+        height:100px;
+        float:left;
+    }
+    
+    .published_apps_wrap .app .img_wrap img{
+        width:100px;
+        height:100px;
+    }
+    
+    .published_apps_wrap .app .short_info {
+        width:129px;
+        height:120px;
+        float:right;
+
+        
+    }
+    
+    .published_apps_wrap .app .short_info .info {
+        padding:0px 5px;
+        margin-bottom:5px;
+        font-size:12px;
+    }
+    
+    .published_apps_wrap .app .short_info .info label {
+        font-weight:bold;
+        display:inline;
+        font-size:12px;
+    }
+    
+    div.engagment {
+        margin-top:5px;
+    }
+    
+    div.engagment:hover .counter {
+        display:block;
+    }
+    
+    div.engagment h5 {
+        font-size:12px;
+        font-weight:normal;
+    }
+    
+    
+    div.engagment .fill_bar {
+        position:relative;
+        margin:0px auto;
+        margin-top:3px;
+        width:225px;
+        padding:1px;
+        padding-right:3px;
+        height:8px;
+        background-color:#232323;
+        -webkit-border-radius: 6px;
+        border-radius: 6px;
+        overflow:hidden;
+    }
+    
+    div.engagment .fill_bar .fill {
+        height:8px;
+
+        position:absolute;
+        -webkit-border-radius: 6px 0 0 6px;
+        border-radius: 6px 0 0 6px;
+        background-image:url('img/fill_bar_fill.png');
+        background-repeat:no-repeat;
+    }
+    
+    div.engagment .counter {
+        display:none;
+        position:absolute;
+        bottom:10px;
+        margin-left:-15px;
+        background-image:url('img/fill_counter.png');
+        background-repeat:no-repeat;
+        width:32px;
+        height:29px;
+        z-index:200;
+        font-size:10px;
+        color:#ffffff;
+        text-align:center;
+    }
+    
+    .buttons {
+        margin-top:10px;
+        height:30px;
+        line-height:30px;
+    }
+    
+    .buttons a {
+        margin-top:8px;
+        display:block;
+        color:#ffffff;
+        font-size:11px;
+        float:right;
+        height:14px;
+        line-height:14px;
+        margin-left:8px;
+        font-weight:bold;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    .tab-pane {
+/*        margin-top:20px;*/
+        background-repeat:repeat-x;
+        background-position:center top;
+    }
+
+
+    .tab-pane .app_icon_wrap {
+        float:left;
+        width:140px;
+        border:0px solid green;
+    }
+
+    .tab-pane .app_icon_wrap.comming_soon {
+       background-image:url('../img/comming_soon.png');
+        background-repeat:no-repeat;
+        background-position:center top; 
+    }
+
+    .tab-pane .app_icon_wrap img.comming_soon_img {
+        display:none;
+    }
+
+    .tab-pane .app_icon_wrap img.private_img {
+        display:none;
+    }
+
+    .tab-pane .app_icon_wrap.comming_soon img.comming_soon_img{
+        position:absolute;
+        left:0;
+        top:0px;
+        z-index:10;
+        display:block;
+    }
+
+    .tab-pane .app_icon_wrap.private img.private_img{
+        position:absolute;
+        left:0;
+        top:0px;
+        z-index:10;
+        display:block;
+    }
+
+    .tab-pane .app_icon_wrap.comming_soon img.app_img {
+        opacity:0.7;
+        filter:alpha(opacity=70); /* For IE8 and earlier */
+    }
+
+    .tab-pane .app_icon_wrap img {
+        width:140px;
+        height:140px;
+    }
+
+
+
+    .tab-pane .app_cont {
+        margin-top:20px;
+        padding-top:16px;
+        background-image:url('../img/log_top.png');
+        background-repeat:repeat-x;
+        background-position:center top;
+    }
+
+
+    .tab-pane .app_cont .app_icon_wrap {
+        float:left;
+        width:140px;
+        border:0px solid green;
+    }
+
+    .tab-pane .app_cont .app_icon_wrap.comming_soon {
+       background-image:url('../img/comming_soon.png');
+        background-repeat:no-repeat;
+        background-position:center top; 
+    }
+
+    .tab-pane .app_cont .app_icon_wrap img.comming_soon_img {
+        display:none;
+    }
+
+    .tab-pane .app_cont .app_icon_wrap img.private_img {
+        display:none;
+    }
+
+    .tab-pane .app_cont .app_icon_wrap.comming_soon img.comming_soon_img{
+        position:absolute;
+        left:0;
+        top:0px;
+        z-index:10;
+        display:block;
+    }
+
+    .tab-pane .app_cont .app_icon_wrap.private img.private_img{
+        position:absolute;
+        left:0;
+        top:0px;
+        z-index:10;
+        display:block;
+    }
+
+    .tab-pane .app_cont .app_icon_wrap.comming_soon img.app_img {
+        opacity:0.7;
+        filter:alpha(opacity=70); /* For IE8 and earlier */
+    }
+
+    .tab-pane .app_cont .app_icon_wrap img {
+        width:140px;
+        height:140px;
+    }
+
+
+    .tab-pane .app_info_wrap {
+        float:right;
+        width:910px;
+        border:0px solid green;
+
+    }
+
+
+    .tab-pane .app_info_wrap .left {
+        float:left;
+        width:60%;
+        height:140px;
+        border:0px solid green;
+    }
+
+
+    .tab-pane .app_info_wrap .right {
+        float:right;
+        width:38%;
+        text-align:right;
+        height:140px;
+        border:0px solid green;
+    }
+
+
+    .tab-pane .app_info_wrap h2 {
+        font-size:18px;
+        margin-bottom:6px;
+    }
+
+
+    .tab-pane .app_info_wrap h5 {
+       color:#717171;
+       font-size:12px;
+       font-weight:normal;
+       margin-bottom:6px;
+    }
+
+
+    .tab-pane .app_info_wrap .category{
+        font-size:16px;
+        width:auto;
+        float:right;
+        clear:both;
+        border-bottom:1px dashed #717171;
+        margin-bottom:6px;
+        padding-bottom:3px;
+    }
+
+    .tab-pane .app_info_wrap .more {
+        color:#2b89b9;
+        position:absolute;
+        right:0;
+        bottom:0;
+    }
+
+    .tab-pane .app_info_wrap .more a {
+        color:#2b89b9;
+    }
+
+    .tab-pane .app_info_wrap .short_desc {
+        font-style:italic;
+        font-size:14px;
+        padding-right:10%;
+    }
+
+    .tab-pane .app_info_wrap .app_actions {
+        position:absolute;
+        left:0;
+        bottom:0;
+        border:0px solid green; 
+        height:30px;
+        line-height:20px;
+        width:100%;
+    }
+
+    .tab-pane .more_info {
+        float:left;
+        margin-left:140px;
+        margin-top:6px;
+        background-color:#ffffff;
+        border:1px solid #c3c3c3;
+        padding:10px;
+        display:none;
+        width:650px;
+    }
+    
+    
+</style>

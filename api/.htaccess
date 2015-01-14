@@ -1,0 +1,12 @@
+Options +FollowSymLinks   
+RewriteEngine On   
+ 
+RewriteCond %{SCRIPT_FILENAME} !-d   
+RewriteCond %{SCRIPT_FILENAME} !-f  
+
+RewriteRule ^gf$ general.php
+
+RewriteRule ^e/(.*)$ get_e.php?nmb=$1
+
+
+RewriteRule ^exd/(.*)$ excel_dw/download.php?filename=$1

@@ -1,0 +1,35 @@
+<form  name="q_form">
+<div id="loadPreviousModal" class="addEditQuestion" ng-init="initCtrl();" ng-cloak="testMe()">
+    <h3>Add player</h3>
+    <div style="margin-top:20px;">
+        
+        
+        <input class="inputMark fields2 margin_right" ng-class="{fields3:empID}" type="text" placeholder="Enter player name" name="name" id="text" ng-model="player.name"  ng-minlength=3 ng-maxlength=90 maxlength="90" required ng-focus  />
+
+        <input class="inputMark fields2" type="email" ng-class="{fields3:empID,margin_right:empID}" placeholder="Enter player email" name="email" id="text" ng-model="player.email"  ng-minlength=3 ng-maxlength=90 maxlength="90" required ng-focus  />
+
+        <input class="inputMark fields3:empID" ng-show="empID" type="text" style="width:230px;" placeholder="Enter player employee ID" name="empID" id="text" ng-model="player.empID"  ng-minlength=1 ng-maxlength=90 maxlength="90" required ng-focus  />
+        
+        <br class="clr" />
+    </div>
+    <div class="actions_wrap" content-load="contentLoad()">
+         <button type="button" class="system_button blue_button" style="float:left;" ng-click="cancel()">Cancel</button>
+         <button type="button" class="system_button green_button" style="float:right;" ng-click="addPlayer()">{{add_text}}</button>
+         <br class="clr" />
+    </div>
+</div>
+</form>
+
+<style>
+    .fields2 {
+        width:358px !important;
+    }
+    
+    .fields3 {
+        width:230px !important;
+    }
+    
+    .margin_right {
+        margin-right:15px;
+    }
+</style>

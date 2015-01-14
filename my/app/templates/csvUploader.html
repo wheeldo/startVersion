@@ -1,0 +1,129 @@
+<div>
+    <h4>Upload your CSV/xls/xlsx file: <span ng-show="exp_file" style="font-size:12px;">(<a href="{{exp_file}}">Download example file</a>)</span></h4>
+    <div>
+        <form id="file_upload_form" target="upload_target" method="post" enctype="multipart/form-data" action="ajax/csvGeneralUploader.php">
+            <input type="file" class="file" name="csv" ng-file-select="onFileSelect($files)" />
+            <input type="hidden" name="res_mark" value="{{res_mark.hash}}" />
+            <img class="loader" src="img/loader.gif" />
+        </form>
+        <iframe id="upload_target" name="upload_target" src="" style="width:0;height:0;border:0px solid #fff;"></iframe>
+    </div>
+    <hr />
+    <div class="dataWrap">
+        <table>
+            <tr>
+                <th style="width:15px;"></th>
+                <th ng-repeat="data in data_expected">{{data.name}}</th>
+            </tr>
+            <tr>
+                <td style="text-align:center;">
+                    <div class="move_or_drag" ng-show="csvData">
+                        
+                    </div>
+                    <div class="data_row" ng-repeat="row in csvData[0]">
+                        <a href="javascript:void(0)" ng-click="removeRow($index)"><img src="img/del_icon.png" /></a>
+                    </div>
+                </td>
+                <td ng-repeat="data in data_expected" class="data" data-index="{{$index}}">
+                    <div class="move_or_drag" ng-show="csvData">
+                        <a href="javascript:void(0)" ng-click="move_left($index)" class="move left" ng-class="{disabled:$index==0}"><img src="img/move_left.png" /></a>
+                        <div class="dragArea">
+                            
+                        </div>
+                        <a href="javascript:void(0)" ng-click="move_right($index)" class="move right" ng-class="{disabled:$index==data_expected.length-1}"><img src="img/move_right.png" /></a>
+                    </div>
+                    <div class="data_row" ng-repeat="row in csvData[$index]">{{row}}</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="actions_wrap" content-load="contentLoad()">
+        <button type="button" class="system_button blue_button" style="float:left;" ng-click="cancel()">Cancel</button>
+        <button type="button" class="system_button green_button" style="float:right;" ng-click="save()" ng-disabled="!uploadReady" ng-class="{disabled:!uploadReady}">Save</button>
+    </div>
+</div>
+
+<style>
+    .actions_wrap {
+        margin-top:30px;
+    }
+    h4 {
+        border-bottom:1px solid #E5E5E5;
+        padding:10px 0px;
+        margin-bottom:10px;
+    }
+    
+    img.loader {
+        display:none;
+    }
+    
+    hr {
+       margin:10px 0px;
+       border-bottom:1px solid #E5E5E5; 
+    }
+    
+    .dataWrap {
+        height:400px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    
+    .dataWrap table {
+        width:100%;
+    }
+    
+    .dataWrap table td,
+    .dataWrap table th {
+        border:1px solid #E5E5E5;
+        padding:2px;
+        vertical-align: top;
+    }
+    
+    .dataWrap table td {
+
+    }
+    
+    div.data_row {
+        font-size:13px;
+        color:#000000;
+        border-bottom:1px solid #E5E5E5;
+        height:20px;
+        line-height:20px;
+        overflow: hidden;
+        
+    }
+    
+    div.move_or_drag {
+        height:30px;
+        line-height:30px;
+        border-bottom:1px solid #000000;
+    }
+    
+    div.move_or_drag img {
+        vertical-align: middle;
+    }
+    
+    a.move {
+        display:block;
+        width:20px;
+        height:30px;
+    }
+    
+    a.move.disabled {
+        opacity:0.3;
+        filter:alpha(opacity=30); /* For IE8 and earlier */
+        cursor:default;
+    }
+    
+    a.move.left {
+        float:left;
+    }
+    
+    a.move.right {
+        float:right;
+    }
+    
+    div.dragArea {
+        cursor:move;
+    }
+</style>

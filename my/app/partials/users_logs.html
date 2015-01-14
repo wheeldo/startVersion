@@ -1,0 +1,40 @@
+<div class="userLogsrap" ng-init="init();">
+<div class="search_bar">
+    <div>
+        <input class="search autoTxT" id="team_filter" type="text" placeholder="Type to filter" ng-model="search" />
+        <select id="org_filter" ng-model="org_filter">
+            <option ng-repeat="org in orgs" value="{{org.userOrg}}">{{org.userOrg}}</option>
+        </select>
+        
+    </div>
+</div>
+    
+    
+<div class="usersTable">
+    <div class="th">
+        <div class="fst"><input type="checkbox" class="check_all" /></div>
+        <div class="country sort" ng-click="sortBy('country')" >Country</div>
+        <div class="userOrg sort" ng-click="sortBy('userOrg')" >Org</div>
+        <div class="userName sort" ng-click="sortBy('userName')">User</div>
+        <div class="time sort" ng-click="sortBy('time')">Time</div>
+        <div class="ip sort" ng-click="sortBy('ip')">IP</div>
+        <div class="type sort" ng-click="sortBy('type')">Action</div>
+        <div class="more">More</div>
+        <br class="clr" />
+    </div>
+    <div class="td" ng-repeat="log in users_logs | filter:search | filter:org_filter | orderBy:predicate:reverse" ng-class-odd="'odd'" ng-class-even="'even'">
+        <div class="fst"><input type="checkbox" class="row_checker" /></div>
+        <div class="country"><img title="{{log.country}}" src="/img/flags/{{log.country}}.gif" /></div>
+        <div class="userOrg">{{log.userOrg}}</div>
+        <div class="userName">{{log.userName}}</div>
+        <div class="time">{{log.date}}</div>
+        <div class="ip">{{log.ip}}</div>
+        <div class="type">{{log.type}}</div>
+        <div class="more">{{log.more}}</div>
+        <br class="clr" />
+   </div>
+</div>
+    
+</div>
+
+

@@ -1,0 +1,41 @@
+<div class="app_edit_container" ng-init="initGuessWot()">
+    <div class="nav_top">
+        <a href="javascript:void(0);" class="add" ng-click="addGWQuestion()">Add a question</a>
+        <a href="javascript:void(0);" class="add" ng-click="addPlayerToGame()" ng-show="showAddPlayer">Add player</a>
+        <a href="javascript:void(0);" class="team" ng-click="teamOptionsOpen()" ng-show="copyData.appCopyTerminate==0">Resend invitation</a>
+        <a href="javascript:void(0);" class="load" ng-click="loadPreviousGames()">Load previous game</a>
+        <br class="clr" />
+    </div>
+    <label class="checkbox">
+        <input class="autoSaveChange" type="checkbox" ng-model="editData.game_info.anonymous" ng-true-value="1" ng-false-value="0">
+        Anonymous
+    </label>
+    <div class="questions_wrap">
+        <div class="q_wrap" ng-repeat="q in editData.questions">
+            <div class="q_visible">
+                <span class="order">
+                    <a href="javascript:void(0)" title="Move up" ng-click="moveUp($index)"><img title="Move up" src="img/up.gif" /></a>
+                    <a href="javascript:void(0)" title="Move down" ng-click="moveDown($index)"><img title="Move down" src="img/down.gif" /></a>
+                </span>
+                <span class="index">{{$index+1}}</span>
+                <span class="question">{{q.text}} ({{types_array[q.type]}})</span>
+                <span class="show_options" q_hidden="{{$index}}">
+                    <a href="javascript:void(0);" ng-show="q.type!=1">More</a>
+                </span>
+                <span class="remove"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="removeQGW($index)">Remove</a></span>
+                <span class="edit"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="editQGW($index)">Edit</a></span>
+                
+            </div>
+            <div class="q_hidden" q_hidden="{{$index}}">
+                <label class="values_options" ng-repeat="value in q.values" ng-show="q.type==2">{{value.text}}</label>
+                <label class="values_options" ng-repeat="option in q.options" ng-show="q.type==3">{{option.text}}</label>
+                <br class="clr" />
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .user_checkbox {
+        margin:10px 0px;
+    }
+</style>

@@ -1,0 +1,17 @@
+<form  name="q_form">
+<div id="addTeamModalInWrap" ng-init="initCtrl();" ng-cloak="testMe()">
+    <h3>Select Team For Your New Users</h3>
+    <div style="margin-top:20px;">
+         <select ng-model="selected_team" id="selected_team_val">
+             <option value="0">--- Please select team ---</option>
+             <option ng-repeat="team in teams" value="{{team.teamID}}">{{team.teamName}}</option>
+        </select>
+        <br class="clr" />
+    </div>
+    <div class="actions_wrap" content-load="contentLoad()">
+         <button type="button" class="system_button blue_button" style="float:left;" ng-click="cancel()">Cancel</button>
+         <button type="button" class="system_button green_button" style="float:right;" ng-click="selectTeam()" ng-disabled="!selected_team">Next</button>
+         <br class="clr" />
+    </div>
+</div>
+</form>

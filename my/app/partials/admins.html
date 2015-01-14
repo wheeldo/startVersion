@@ -1,0 +1,72 @@
+<div class="loader_afterload {{finish_load}}">
+<div class="teamsWrap" ng-init="init();">
+    <div class="topPanel">
+        <a class="sysButton green addEmployee" href="javascript:void(0)" ng-click="addAdmin()">Add Admin</a>
+        <a class="sysButton blue" href="javascript:void(0)" ng-click="removeUsers()">Remove</a>
+        <input class="search autoTxT" id="team_filter" type="text" placeholder="Type to filter" ng-model="search" />
+        <div class="dd_wheeldo">
+            <input type="hidden" class="value" id="filter" />    
+        </div>
+        
+        <a class="sysButton blue pager" ng-click="goNextPage()"><img src="img/pagerR.png" /></a>
+        <a class="sysButton blue pager" ng-click="goPerviousPage()"><img src="img/pagerL.png" /></a>
+        <div class="amount"><strong>{{amount}}</strong> out of {{users.length}}</div>
+        <br class="clr" />
+    </div>
+    <div class="mainData">
+        <div class="usersTable" ng-show="users_loaded">
+            <div class="th">
+                <div class="fst"><input type="checkbox" class="check_all" ng-model="check_all" ng-change="checkAll()" /></div>
+                <div class="name sort" ng-click="sortBy('name')" >Admin</div>
+                <div class="email email_admins sort" ng-click="sortBy('email')">Email (user name)</div>
+                <div class="reset_password sort">Reset Password</div>
+                <div class="edit">Edit</div>
+                <div class="delete">Delete</div>
+                <br class="clr" />
+            </div>
+            <div class="td" ng-repeat="admin in admins | filter:search |  filter:filterMultiple | orderBy:predicate:reverse | limitTo:limitMax | limitTo: users_per_page" ng-class-odd="'odd'" ng-class-even="'even'"  repeat-done="setCheckUser()">
+                <div class="fst"><input type="checkbox" class="row_checker" ng-model="admin.checked" ng-change="selectUser($index)" ng-checked="admin.checked" /></div>
+                <div class="name"><input type="text" class="in_row_edit" last_value="{{admin.name}}" ng-readonly="!admin.editable" ng-model="admin.name" ng-class="{editable:admin.editable}" /></div>
+                <div class="email_admins"><input type="email" class="in_row_edit" last_value="{{admin.email}}" ng-readonly="!admin.editable" ng-model="admin.email" ng-class="{editable:admin.editable}" /></div>
+                <div class="reset_password">
+                    <input type="password" class="new_password" placeholder="Insert new password" required ng-minlength="6" ng-model="admin.new_password" />
+                    <button type="button" ng-disabled="!admin.new_password" ng-click="resetUserPassword(admin.id)">Reset</button>
+                </div>
+                <div class="edit">
+                    <a href="javascript:void(0)" ng-click="editAdmin(admin.id)" ng-hide="admin.editable">Edit</a>
+                    <a href="javascript:void(0)" ng-click="saveAdmin(admin.id)" ng-show="admin.editable">Save</a>
+                </div>
+                <div class="delete"><a href="javascript:void(0)" ng-click="deleteAdmin(admin.id)">Delete</a></div>
+                <br class="clr" />
+            </div>
+            
+        </div>
+        
+    </div>    
+</div>
+</div>
+<div class="loader_beforeload {{finish_load}}">
+    <img src="img/wait_ge.gif" />
+</div>
+<style>
+    .topPanel {
+        display:block !important;
+    }
+    
+    input.in_row_edit[type="text"],
+    input.in_row_edit[type="email"] {
+        width:100% !important;
+        color:#333333;
+        border:0px solid #333333;
+        font-size: 13px; 
+        background-color:#ffffff !important;
+    }
+    input.editable[type="text"],
+    input.editable[type="email"] {
+        border:1px solid #333333;
+    }
+    
+    .new_password {
+        width:70%;
+    }
+</style>

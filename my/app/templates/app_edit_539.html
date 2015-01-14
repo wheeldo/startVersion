@@ -1,0 +1,226 @@
+<div class="app_edit_container voter" ng-init="initVoter()">
+    <div class="nav_top">
+        <a href="javascript:void(0);" class="add" ng-click="addPlayerToGame()" ng-show="showAddPlayer">Add player</a>
+        <a href="javascript:void(0);" class="team" ng-click="teamOptionsOpen()" ng-show="copyData.appCopyTerminate==0">Resend invitation</a>
+        <a href="javascript:void(0);" class="load" ng-click="loadPreviousGames()">Load previous game</a>
+        <br class="clr" />
+    </div>
+    <div class="left">
+        
+        <h4>Write a question for your team to answer: <img class="help" src="/img/help_icon30_30.png" popover='Remember to write an open question. Your team members will have an option to answer the question and share their knowledge with other team members.'  popover-placement="right" popover-trigger="mouseenter" /></h4>
+        <input class="inputMark" type="text" placeholder="e.g. What is the best way to use our product? " name="voter_question" ng-model="editData.configs.question" id="voter_question" ng-minlength=3 ng-maxlength=80 maxlength="80" required ng-focus />
+        <br class="clr"/>
+        <hr />
+        
+
+        
+        <div class="option checkbox">
+            <label>
+              <input type="checkbox" ng-checked="editData.configs.user_answers==1" ng-model="editData.configs.user_answers"> Allow users to submit ideas <img class="help" src="/img/help_icon30_30.png" popover='Choosing this option will allow all game players to write answers to your question and then to vote on them. If you do not choose this option, game participants will be sent an invitation to rate the answers you wrote.'  popover-placement="right" popover-trigger="mouseenter" />
+            </label>
+        </div>
+        
+        
+        <div class="option" ng-show="editData.configs.user_answers==1">
+            <label>
+               Players will be able to submit ideas for <input class="inputMark" type="text" name="limit_time" ng-model="editData.configs.duration" id="limit_time" ng-minlength="1" ng-maxlength="3" maxlength="3" required ng-focus /> hours
+            </label>
+        </div>
+        
+        <a href="javascript:void(0);" class="add add_answer_link" ng-click="addVoterAnswer()">Add your answer</a>
+        <br class="clr"/>
+        
+        <div class="questions_wrap">
+            <div class="q_wrap" ng-repeat="answer in editData.answers">
+               <div class="q_visible">
+                    <span class="order">
+                        <a href="javascript:void(0)"><img src="img/up.gif" /></a>
+                        <a href="javascript:void(0)"><img src="img/down.gif" /></a>
+                    </span>
+                    <span class="index">{{$index+1}}</span>
+                    <span class="question">{{answer.data.answer_description}}</span>
+                    <span class="img"><img src="{{answer.data.img_bitmap}}" ng-show="answer.data.img_bitmap" /><img src="http://apps.wheeldo.com/Voter/{{answer.data.img_link}}" ng-show="answer.data.img_link" /></span>
+                    <span class="by" ng-show="answer.data.user_name">by {{answer.data.user_name}}</span>
+                    <span class="remove"><a href="javascript:void(0);" ng-click="removeAnswerVoter($index)">Remove</a></span>
+                    <span class="remove"><a href="javascript:void(0);" ng-click="editAnswerVoter($index)">Edit</a></span>
+
+                </div>
+            </div>
+        </div>
+        <br class="clr"/>
+    </div>
+    <div class="right">
+        
+    </div>
+</div>
+
+
+<style type="text/css">
+    h4 {
+        margin-bottom:5px;
+    }
+    
+    .image_wrap {
+        width:152px;
+        height:152px;
+        line-height:150px;
+        border:1px dashed gray;
+        margin:8px;
+    }
+
+    .image_wrap img {
+        max-width:150px;
+        max-height:150px;
+        vertical-align:middle;
+    }
+
+    .image_wrap .main_image {
+        width:150px;
+        max-height:150px;
+        display:none;
+    }
+    
+    .image_wrap .main_image.show {
+        display:inline;
+    }
+
+    .image_wrap .loadImage {
+        display:none;
+    }
+
+    .addAnswerVoter .file {
+        display:block !important;
+        border:1px solid red !important;
+        position:absolute !important;
+        width:120px !important;
+        left:35px !important;
+        cursor:pointer !important;
+        opacity:0 !important;
+        filter:alpha(opacity=0) !important; /* For IE8 and earlier */
+        z-index:100 !important;
+    }
+
+    .after_upload {
+        display:none;
+    }
+
+
+    .uploader {
+     border:1px solid black;   
+     width:170px;
+     height:200px;
+     text-align:center;
+    }
+
+    button.browse {
+        display:block;
+        width:120px;
+        height:26px;
+        margin-left:25px;
+        z-index:0;
+    }
+    div {
+        position:relative;
+    }
+
+    .image_wrap div.info {
+        line-height:14px;
+        position:absolute;
+        width:146px;
+        bottom:1px;
+        left:1px; 
+        font-size:10px;
+        border:1px solid black;
+        padding:1px;
+        background-color:#ffffff;
+        opacity:0.7;
+        filter:alpha(opacity=70); /* For IE8 and earlier */
+        display:none;
+    }
+    
+    .app_edit_container.voter {
+        
+    }
+    
+    .app_edit_container.voter .left {
+        float:left;
+        width:738px;
+        min-height:100px;
+/*        background-color:#D7FED7;*/
+    }
+    
+    .checkbox_row {
+        height:30px;
+        line-height:30px;
+    }
+    
+    .app_edit_container.voter .right {
+        float:right;
+        width:362px;
+        min-height:100px;
+/*        background-color:#E3BDD3;*/
+    }
+    
+    .app_edit_container.voter .left input[type="text"] {
+        width:728px;
+    }
+    
+    .app_edit_container.voter .left hr {
+        border:0;
+        border-top:1px solid #B6B6B6;
+        margin:8px 0px;
+    }
+    
+    .app_edit_container.voter .left .checkbox {
+        margin:12px 0px;
+    }
+    
+    #limit_time {
+        width:20px;
+        display:inline;
+        float:none;
+        height:18px;
+        line-height:18px;
+        margin:0px 10px;
+        font-size:12px;
+    }
+    
+    .app_edit_container.voter .left  .option {
+        padding-bottom:12px;
+        border-bottom:1px solid #B6B6B6;
+    }
+    
+    
+    .app_edit_container.voter .checkbox {
+        background-position:left top;
+    }
+    
+    .app_edit_container.voter .left .add_answer_link {
+        display:block;
+        margin:12px 0px;
+    }
+    
+    .addAnswerVoter>div {
+        margin:10px 0px;
+    }
+    
+    .addAnswerVoter>div input[type="text"]{
+        width:746px;
+    }
+    
+    .addAnswerVoter>div textarea {
+        resize:none;
+        width:754px;
+    }
+    
+    .addAnswerVoter #voter_preview_image{
+        max-width:300px;
+        max-height:120px;
+    }
+    
+    
+    .addAnswerVoter img.loadImage {
+        display:none;
+    }
+
+</style>

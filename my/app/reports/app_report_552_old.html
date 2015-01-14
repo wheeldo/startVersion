@@ -1,0 +1,129 @@
+
+<div class="pivot" ng-repeat="cut in reportData.cuts">
+    <label>{{cut.name}}</label>
+    <select>
+        <option></option>
+        <option ng-repeat="con in cut.data">{{con}}</option>
+    </select>
+</div>
+<a href="javascript:void(0)" ng-click="reloadReportData('guessWotInit')"><img src="img/reload.png" /> Refresh data</a>
+<br class="clr" />
+<br class="clr" />
+<div class="stat_block on_run" ng-init="guessWotInit()">
+    
+    
+    
+    
+    
+    
+    
+    <h4>Real Time Statistics:</h4>
+    <div class="info"><label>Active players:</label> {{active_players}}</div>
+    
+    <div class="info"><label>Leader:</label> {{leader.name}} ({{leader.score}} points)</div>
+    
+    
+    
+    <div google-chart chart="chart_participants" style="{{chart.cssStyle}}" class="chart_small" on-ready="chartReady()" />
+    
+    <div google-chart chart="chart_tips" style="{{chart.cssStyle}}" class="chart_small" on-ready="chartReady()" />
+    
+    <div google-chart chart="chart_users_notes" style="{{chart.cssStyle}}" class="chart_small" on-ready="chartReady()" />
+     <br class="clr" />
+    
+    <div google-chart chart="chart_users_scores" style="{{chart.cssStyle}};border:1px solid #BEBEBE;" class="chart_big" on-ready="chartReady()" />
+    
+    <div google-chart chart="recognition_users" style="{{chart.cssStyle}};border:1px solid #BEBEBE;margin-top:20px;" class="chart_big" on-ready="chartReady()" />
+    
+    <br class="clr" />
+</div>
+    
+<div class="stat_block insights">
+    <h4>Insights:</h4>
+
+    
+    <div ng-repeat="q in questionsByType[1]">
+        <div class="info"><label>Questions:</label> {{q.text.text}}</div>
+        <div class="info"><label>No of answers:</label> {{q.stats.counter}}</div>
+        <div class="info"><label>Average:</label> {{q.stats.stats/q.stats.counter}}</div>
+        
+    </div>
+    
+    <br class="clr" />
+
+</div>
+    
+<div class="stat_block data">
+    <h4>Raw Data:</h4>
+    <br class="clr" />
+    
+    <div class="data_type" data_type="users">
+        <div class="comp_stat_wrap">
+            <h5>Users:</h5>
+            <div class="switch_view_wrap">
+                <a href="javascript:void(0)" ng-click="downloadCsvFile('chart_users')"><img src="img/csvIcon.png" /> Download CSV file</a>
+            </div>
+            <div google-chart chart="chart_users" style="{{chart.cssStyle}}" class="chart_big" on-ready="chartReady()" />
+        </div>
+        <br class="clr" />
+    </div>
+        
+        
+    <div class="data_type" data_type="questions">
+        <div class="comp_stat_wrap">
+            <h5>Questions Type 1</h5>
+            <div class="switch_view_wrap">
+                <a href="javascript:void(0)" ng-click="downloadCsvFile('chart_questions_type_1')"><img src="img/csvIcon.png" /> Download CSV file</a>
+            </div>
+            <div google-chart chart="chart_questions_type_1" style="{{chart.cssStyle}}" class="chart_big" on-ready="chartReady()" />
+        </div>
+        <br class="clr" />
+    </div>
+    
+</div>
+<style>
+    div.info {
+        margin:10px 0px;
+    }
+    
+    div.info label {
+        display:inline;
+        font-weight:bold;
+        cursor:default;
+    }
+    .stat_block {
+        padding:20px 0px;
+        border-bottom:1px solid #BEBEBE;
+    }
+    
+    .stat_block h4{
+        text-decoration:underline;
+    }
+    
+    .chart_small {
+        float:left;
+        margin:10px 22px;
+        border:0px solid #BEBEBE;
+    }
+    
+    .comp_stat_wrap {
+        border:0px solid #BEBEBE;
+    }
+    
+    .switch_view_wrap {
+        margin:10px 0px;
+    }
+    
+    .switch_view_wrap button {
+        margin-right:10px;
+    }
+    
+    
+    .google-visualization-table-td-number {
+        text-align:center;
+    }
+    
+    .pivot {
+        margin:20px 0px;
+    }
+</style>

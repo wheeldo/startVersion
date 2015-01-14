@@ -1,0 +1,162 @@
+
+<div>
+    <div class="filter" ng-repeat="(name,filter) in reportData.filters" ng-show="filter.length<11">
+        <label class="header">{{name}}:</label>
+        <div class="filterBox checkbox" ng-repeat="value in filter">
+            <label>
+                <input type="checkbox" class="filters" cat="{{name}}" val="{{value}}" checked="true"> {{value}}
+            </label>
+        </div>
+        <br class="clr" />
+    </div>
+    <br class="clr" />
+</div>
+
+
+<a href="javascript:void(0)" ng-click="filterData()"><img src="img/reload.png" /> Filter data</a>
+<!--<a href="javascript:void(0)" ng-click="reloadReportData('guessWotInit')"><img src="img/reload.png" /> Refresh data</a>-->
+<br class="clr" />
+<br class="clr" />
+<div class="stat_block on_run" ng-init="guessWotInit()">
+    
+    <h4>Real Time Statistics:</h4>
+    <div class="info"><label>Active players:</label> {{active_players}}</div>
+    
+    <div class="info"><label>Leader:</label> {{leader.name}} ({{leader.score}} points)</div>
+    
+    
+    
+    <div google-chart chart="chart_participants" style="{{chart.cssStyle}}" class="chart_small" id="chart_participants" on-ready="chartReady()" />
+    <br class="clr" />
+</div>
+
+   
+<div class="stat_block data">
+    <h4>Results:</h4>
+    <br class="clr" />
+    
+    <div class="question_row" ng-repeat="question in questions_texts" id="q_wrap_{{$index}}">
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios" ng-click="setQStats($index)">
+                {{question.text}}                
+            </label>
+        </div>
+        <div class="radio sec" ng-show="question.type==5">
+            <label>
+                <input type="radio" name="optionsRadios" ng-click="setQStats($index,question.type,'true')">
+                {{question.conditionMultiSelect.instruction_true}}
+            </label>
+        </div>
+        <div class="radio sec" ng-show="question.type==5">
+            <label>
+                <input type="radio" name="optionsRadios" ng-click="setQStats($index,question.type,'false')">
+                {{question.conditionMultiSelect.instruction_false}}
+            </label>
+        </div>
+        <div class="radio sec" ng-show="question.type==4">
+            <label>
+                <input type="radio" name="optionsRadios" ng-click="setQStats($index,question.type,'true')">
+                {{question.condition.instruction_true}}
+            </label>
+        </div>
+        <div class="radio sec" ng-show="question.type==4">
+            <label>
+                <input type="radio" name="optionsRadios" ng-click="setQStats($index,question.type,'false')">
+                {{question.condition.instruction_false}}
+            </label>
+        </div>
+    </div>
+    
+    
+    <div google-chart chart="question_graph" style="{{chart.cssStyle}}" class="chart_big" style="height:400px;" on-ready="chartReady()" />
+</div>
+    
+<div class="stat_block data">
+    <h4>Raw Data:</h4>
+    <h5>Full report:</h5>
+    <div class="switch_view_wrap">
+        <a href="javascript:void(0)" ng-click="getFullGuessWotReport()"><img src="img/csvIcon.png" /> Download full report as CSV file</a>
+    </div>
+    
+    <h5>Users:</h5>
+    <div class="switch_view_wrap">
+        <a href="javascript:void(0)" ng-click="downloadCsvFile('raw_users')"><img src="img/csvIcon.png" /> Download CSV file</a>
+    </div>
+    <div google-chart chart="raw_users" style="{{chart.cssStyle}}" class="chart_big" style="height:400px;" on-ready="chartReady()" />
+    
+    
+    <br class="clr" />
+</div>
+<style>
+    
+    .sec {
+        margin-left:20px;
+    }
+    .checkbox {
+        background-position:left top;
+    }
+    .filter {
+        margin:10px 0px;
+        min-height:30px;
+        line-height:30px;
+    }
+    
+    .filter label.header {
+        display:block;
+        float:left;
+        width:120px;
+        
+    }
+    
+    .filter .filterBox {
+        float:left;
+        height:30px;
+        line-height:30px;
+        margin:0px 10px;
+    }
+    div.info {
+        margin:10px 0px;
+    }
+    
+    div.info label {
+        display:inline;
+        font-weight:bold;
+        cursor:default;
+    }
+    .stat_block {
+        padding:20px 0px;
+        border-bottom:1px solid #BEBEBE;
+    }
+    
+    .stat_block h4{
+        text-decoration:underline;
+    }
+    
+    .chart_small {
+        float:left;
+        margin:10px 22px;
+        border:0px solid #BEBEBE;
+    }
+    
+    .comp_stat_wrap {
+        border:0px solid #BEBEBE;
+    }
+    
+    .switch_view_wrap {
+        margin:10px 0px;
+    }
+    
+    .switch_view_wrap button {
+        margin-right:10px;
+    }
+    
+    
+    .google-visualization-table-td-number {
+        text-align:center;
+    }
+    
+    .pivot {
+        margin:20px 0px;
+    }
+</style>

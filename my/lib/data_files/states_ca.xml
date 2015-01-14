@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<states>
+	<state>
+		<code>AB</code>
+		<name>Alberta</name>
+	</state>
+	<state>
+		<code>BC</code>
+		<name>British Columbia</name>
+	</state>
+	<state>
+		<code>MB</code>
+		<name>Manitoba</name>
+	</state>
+	<state>
+		<code>NB</code>
+		<name>New Brunswick</name>
+	</state>
+	<state>
+		<code>NF</code>
+		<name>Newfoundland</name>
+	</state>
+	<state>
+		<code>NS</code>
+		<name>Nova Scotia</name>
+	</state>
+	<state>
+		<code>NT</code>
+		<name>Northwest Territories</name>
+	</state>
+	<state>
+		<code>NU</code>
+		<name>Nunavut</name>
+	</state>
+	<state>
+		<code>ON</code>
+		<name>Ontario</name>
+	</state>
+	<state>
+		<code>PE</code>
+		<name>Prince Edward Island</name>
+	</state>
+	<state>
+		<code>QC</code>
+		<name>Quebec</name>
+	</state>
+	<state>
+		<code>SK</code>
+		<name>Saskatchewan</name>
+	</state>
+	<state>
+		<code>YT</code>
+		<name>Yukon Territory</name>
+	</state>
+</states>

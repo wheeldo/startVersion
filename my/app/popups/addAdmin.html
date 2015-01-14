@@ -1,0 +1,19 @@
+<div id="addQuestion">
+    <h3>Add Admin</h3>
+    <input class="inputMark" type="text"  tabindex="1" placeholder="Admin name" name="name" id="name" ng-model="admin.name"  ng-minlength=1 ng-maxlength=30 maxlength="30" required ng-focus/>
+    <input class="inputMark" type="email"  tabindex="2" placeholder="Email (user name)" name="email" id="email" ng-model="admin.email" required ng-focus />
+    <div class="actions_wrap" content-load="contentLoad()">
+         <button type="button" class="system_button blue_button" style="float:left;" ng-click="cancel()">Cancel</button>
+         <button type="button" tabindex="6" class="system_button green_button" style="float:right;" ng-click="saveAdmin()">{{save_text}}</button>
+    </div>
+</div>
+<style>
+    #email,
+    #password{
+        margin-left:10px;
+    }
+    
+    .inputMark {
+        width:234px;
+    }
+</style>

@@ -1,0 +1,28 @@
+Options +FollowSymLinks   
+RewriteEngine On   
+ 
+RewriteCond %{SCRIPT_FILENAME} !-d   
+RewriteCond %{SCRIPT_FILENAME} !-f  
+
+RewriteRule ^login$ loginWindow.php
+RewriteRule ^logout$ logout.php
+RewriteRule ^login_redirect_(.*)$ loginWindow.php?hash=$1
+RewriteRule ^cl$ log.php
+RewriteRule ^ls$ login.php
+RewriteRule ^rp$ recover_password.php
+RewriteRule ^gt$ app/ajax/getters.php
+
+
+RewriteRule ^(.*).aspx$ $1.php
+RewriteRule ^getFile/(.*)$ download.php?filename=$1
+RewriteRule ^getCsv/(.*)$ reports_csv/download.php?filename=$1
+
+RewriteRule ^userUploaderImage/(.*)/(.*)$ userUploaderImage.php?userID=$1&no_image=1
+RewriteRule ^userUploaderImage/(.*)$ userUploaderImage.php?userID=$1
+
+RewriteRule ^userNoPhoto/(.*)$ userNoPhoto.php?userID=$1
+
+
+
+RewriteRule ^uimg_(.*).png$ user_image.php?q=$1
+RewriteRule ^uologo_(.*).png$ org_logo.php?q=$1

@@ -1,0 +1,128 @@
+<div class="app_edit_container voter" ng-init="initDiscussionGroup()">
+    <div class="nav_top">
+        <a href="javascript:void(0);" class="add" ng-click="addPlayerToGame()" ng-show="showAddPlayer">Add player</a>
+        <a href="javascript:void(0);" class="team" ng-click="teamOptionsOpen()" ng-show="copyData.appCopyTerminate==0">Resend invitation</a>
+        <a href="javascript:void(0);" class="load" ng-click="loadPreviousGames()">Load previous game</a>
+        <br class="clr" />
+    </div>
+    <h4>What is the content you would like to share? </h4>
+    <h5>You can choose between a video file or a document (e.g. word, PPT):</h5>
+    <div class="group file" ng-class="{selected:editData.type=='file'}">
+        <div class="radio">
+            <label>
+                <input type="radio" ng-model="editData.type" value="file" />
+                File
+            </label>
+        </div>
+        <form id="file_upload_form" target="upload_target" method="post" enctype="multipart/form-data" action="http://wheeldo.com/apps/DiscussionGroup/index.php/edit/get_file?appID={{copyID}}">
+            <div class="upload_row">
+                <input ng-disabled="editData.type!='file'" type="file" name="uploadFile" ng-file-select="onDiscussionGroupFileSelect($files)" /> 
+                <img src="img/wait_ge.gif" class="loadImage">
+            </div>
+        </form>
+        <iframe id="upload_target" name="upload_target" src="" style="width:0;height:0;border:0px solid #fff;"></iframe>
+        <br class="clr" />
+        <input type="text" class="inputMark" disabled="" id="forigin" ng-model="editData.forigin" />
+        <br class="clr" />
+    </div>
+    
+    <br class="clr" />
+    
+    <div class="group video" ng-class="{selected:editData.type=='video'}">
+        <div class="radio">
+            <label>
+                <input type="radio" ng-model="editData.type" value="video" />
+                Video
+            </label>
+        </div>
+        <input ng-disabled="editData.type!='video'" class="inputMark autoSave" type="url" placeholder="Insert your Youtube or Vimeo link here" name="vlink" ng-model="editData.vlink" id="vlink" ng-minlength=3 ng-maxlength=800 maxlength="800" required ng-focus />
+        <iframe style="" class="videoIframe"></iframe>
+        <br  class="clr" />
+    </div>
+    <br  class="clr" />
+         
+    <h4>Write your discussion topic here: <img class="help" src="/img/help_icon30_30.png" popover='The topic will appear at the top of the discussion page.'  popover-placement="right" popover-trigger="mouseenter" /></h4>
+    <div style="width:740px;margin-left:0px;">
+        <input class="inputMark autoSave" type="text" style="width:480px;" name="title" ng-model="editData.description" placeholder="e.g. What do you think about using social games as a learning tool in the office? " id="description" required ng-focus />
+        <h4 style="margin:0px;margin-left:3px;float:left;height:28px;line-height: 28px;">By:</h4>
+        <input class="inputMark autoSave" type="text" style="width:200px;float:right;" name="by" ng-model="editData.by" id="by" ng-minlength=1 ng-maxlength=50 maxlength="50" required ng-focus />
+    <br class="clr" />
+    </div>
+</div>
+
+
+<style type="text/css">
+    
+    h5 {
+        font-weight:normal;
+        margin-bottom:5px;
+    }
+    .videoIframe {
+        border:2px solid gray;
+        margin:10px 0px;
+        width:200px;
+        height:150px;
+        display:none;
+    }
+    
+    
+    #vlink.youtube{
+        background-image: url('img/youtube_logo.png');
+        background-position:center right;
+        background-repeat:no-repeat;
+    }
+    
+    #vlink.vimeo{
+        background-image: url('img/vimeo_logo.png');
+        background-position:center right;
+        background-repeat:no-repeat;
+    }
+    
+    div.group {
+        padding:4px;
+        border:1px solid gray;
+        width:732px;
+        margin-left:0px;
+        opacity:0.7;
+        filter:alpha(opacity=70); /* For IE8 and earlier */
+    }
+    
+    div.group.selected {
+        opacity:1;
+        filter:alpha(opacity=100); /* For IE8 and earlier */
+        background-color:#ffffff;
+    }
+    
+    .app_edit_container h4 {
+        margin:10px 0px;
+    }
+    
+    input.inputMark {
+        width:722px;
+    }
+    
+    #description {
+        width:734px;
+    }
+    
+    textarea {
+        width:738px;
+        resize:none;
+        height:100px;
+    }
+    
+    .upload_row {
+        height:30px;
+        line-height:30px;
+        width:732px;
+        margin-left:0px;
+    }
+    
+    
+    .upload_row img.loadImage {
+        height:28px;
+        vertical-align:middle;
+        float:right;
+        display:none;
+    }
+</style>

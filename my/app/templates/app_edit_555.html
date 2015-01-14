@@ -1,0 +1,29 @@
+<div class="app_edit_container" ng-init="">
+    <div class="nav_top">
+        <a href="javascript:void(0);" class="add" ng-click="addPlayerToGame()" ng-show="showAddPlayer">Add player</a>
+        <br class="clr" />
+    </div>
+    <div class="">
+        Link to the game: <a target="_blank" href="http://hr.amdocs.com/w/Zoom/login-{{copyData.appCopyID}}">http://hr.amdocs.com/w/Zoom/login-{{copyData.appCopyID}}</a>
+    </div>
+</div>
+<style>
+    .general_details {
+        margin:10px 0px;
+    }
+    
+    #m_email {
+        margin:5px 0px;
+        width:730px;
+    }
+    
+    h4 {
+        margin:5px 0px;
+    }
+    
+    .questions_wrap.waiting_for_approval,
+    .questions_wrap.waiting_for_approval .q_wrap {
+        border-color:red;
+    }
+    
+</style>

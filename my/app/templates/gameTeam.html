@@ -1,0 +1,140 @@
+<div ng-hide="data_ready">Please wait... team data is loading...</div>
+<div class="gameTeam" ng-show="data_ready">
+    <h4>
+        Team: {{data.team.teamName}}
+        <a href="javascript:void(0)" ng-click="sendAll()">Send Invitations to all players </a>
+        <div class="sap">|</div>
+        <a href="javascript:void(0)" ng-click="editEmail()">Edit email</a>
+    </h4>
+    <div class="email_content">
+        <a href="javascript:void(0)" class="close_email" ng-click="closeEmail()">X</a>
+        <h4>Email Content</h4>
+        <input type="text" class="autoTxT" id="email_subject" placeholder="Enter the subject of the mail" ng-model="copyRow.app_email_title" ng-minlength=3 ng-maxlength=90 maxlength="90" required ng-focus />
+        <textarea id="email_content" class="autoTxT" placeholder="Enter the content of the mail" ng-model="copyRow.app_email_content" ng-minlength=3 required ng-focus ></textarea>
+        <div class="actions_email">
+            <div class="noti">{{not}}</div>
+            <button class="system_button blue_button save_edit" ng-click="saveEmail()" style="float:right;" type="button">Save</button>
+            <br class="clr" />
+        </div>
+    </div>
+    <div class="sending" ng-show="sending">{{sending}}</div>
+    <div class="user_row" ng-repeat="user in data.users">
+        <div class="name">{{user.userName}}</div>
+        <a class="get_link f_link" href="javascript:void(0)" ng-click="getUserLink($index)">Get link</a>
+        <a class="send_invitation f_link" href="javascript:void(0)" ng-click="sendInvitation($index)">Send invitation</a>
+        <br class="clr" />
+        <div class="wait_me" ng-show="user.wait">
+            <img src="img/wait_ge.gif" />
+        </div>
+        <div class="link" ng-show="user.link">
+            <a href="{{user.link}}" target="_blank">{{user.link}}</a>
+        </div>
+        <div class="email_res" ng-show="user.email_res">{{user.email_res}}</div>
+    </div>
+</div>
+
+<style type="text/css">
+    
+    .sending {
+        font-size:13px;
+        font-weight:bold;
+    }
+    
+    .close_email {
+        display:block;
+        position:absolute;
+        right:0px;
+        top:0px;
+        font-weight:bold;
+        width:20px;
+        height:20px;
+        text-align:center;
+        color:#333333;
+    }
+    
+    .noti {
+        float:left;
+        color:green;
+    }
+    .actions_email {
+        margin:5px 0px;
+    }
+    .email_content {
+        border:1px solid #333333;
+        padding:5px;
+        background-color:#DFDFDF;
+        display:none;
+    }
+    #email_subject {
+        
+    }
+    
+    #email_content {
+        margin-top:5px;
+    }
+    .gameTeam {
+        max-height:500px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .wait_me img {
+        height:20px;
+    }
+    .gameTeam h4{
+        text-decoration: underline;
+        margin-bottom:5px;
+    }
+    
+    .gameTeam h4 a {
+/*        position:absolute;*/
+        display:block;
+/*        right:0px;
+        top:0px;*/
+        font-size:13px; 
+        float:right;
+    }
+    
+    .gameTeam h4 .sap {
+        float:right;
+        color:#0088CC;
+        width:30px;
+        text-align:center;
+        font-size:13px; 
+    }
+    
+    .gameTeam .user_row {
+        margin:3px 0px;
+        padding:3px;
+    }
+    
+    .gameTeam .user_row:hover {
+        background-color:#7EB8D6;
+    }
+    
+    .gameTeam .user_row .name {
+        float:left;
+    }
+    
+    .gameTeam .user_row a.f_link {
+        display:block;
+        float:right;
+        color:#379ED3;
+    }
+    
+    
+    .gameTeam .user_row:hover a.f_link {
+        color:#ffffff;
+    }
+    
+    .gameTeam .user_row a.f_link:hover {
+        font-weight:bold;
+    }
+    
+    .link {
+        font-size:12px;
+    }
+    
+    .send_invitation {
+        margin-right:10px;
+    }
+</style>

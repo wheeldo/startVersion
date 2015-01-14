@@ -1,0 +1,45 @@
+<form  name="q_form">
+<div id="addQuestion" class="addEditQuestion" ng-init="initCtrl();" ng-cloak="testMe()">
+    <h3>{{title}}
+        <button type="button" class="system_button green_button" style="float:right;" ng-click="saveAddInsight()">{{save_text}}</button>
+        <button type="button" class="system_button blue_button" style="float:right;margin-right:10px;" ng-click="cancel()">Cancel</button>
+         
+    </h3>
+    <div class="question">
+        <input class="inputMark" type="text" placeholder="Enter your headline here" name="headline" id="headline" ng-model="insight.data.headline"  ng-minlength=3 ng-maxlength=9000 maxlength="9000" required ng-focus />
+    </div>
+    <div class="more" ng-hide="hide_more">
+        <label>Article (optional):</label>
+        <textarea ng-model="insight.data.article" id="article"></textarea>
+    </div>
+
+
+    
+    <div class="actions_wrap" content-load="contentLoad()">
+         <button type="button" class="system_button blue_button" style="float:left;" ng-click="cancel()">Cancel</button>
+         <button type="button" class="system_button green_button" style="float:right;" ng-click="saveAddInsight()">{{save_text}}</button>
+    </div>
+    
+</div>
+    
+</form>
+
+<style>
+    .more {
+        margin-top:10px;
+    }
+    
+    .more textarea {
+        width: 720px;
+        resize:none;
+        height:50px;
+        line-height:16px;
+        font-size:12px;
+    }
+    
+    .more input {
+        width: 720px;
+        line-height:16px;
+        font-size:12px;
+    }
+</style>

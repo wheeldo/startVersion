@@ -1,0 +1,83 @@
+<div class="loader_afterload {{finish_load}}">
+<div class="accounts teamsWrap" ng-init="init()">
+    <div class="topPanel">
+        <a class="sysButton blue" href="javascript:void(0)" ng-click="removeOrgs()">Remove</a>
+        <input class="search autoTxT" id="team_filter" type="text" placeholder="Type to filter" ng-model="search" />
+        <div class="dd_wheeldo">
+            <input type="hidden" class="value" id="filter" />    
+        </div>
+        
+        <a class="sysButton blue pager" ng-click="goNextPage()"><img src="img/pagerR.png" /></a>
+        <a class="sysButton blue pager" ng-click="goPerviousPage()"><img src="img/pagerL.png" /></a>
+        <div class="amount"><strong>{{amount}}</strong> out of {{accounts.length}}</div>
+        <br class="clr" />
+    </div>
+    <div class="usersTable">
+        <div class="th">
+            <div class="fst"><input type="checkbox" class="check_all" ng-model="check_all" ng-change="checkAll()" /></div>
+            <div class="r2 sort" ng-click="sortBy('org.organizationID')" >ID</div>
+            <div class="r3 sort" ng-click="sortBy('org.organizationName')" >Organization Name</div>
+            <div class="r4 sort" ng-click="sortBy('account.pricingPackage')">Pricing Status</div>
+            <div class="r5 sort" ng-click="sortBy('account.regDate')">Registration Date</div>
+<!--            <div class="r6 sort" ng-click="sortBy('account.validUntil')">Expiry Date</div>-->
+            <div class="r7">Tokens Counter</div>
+            <div class="r7">Tokens limit</div>
+<!--            <div class="r8">Set expiry date</div>-->
+            <br class="clr" />
+        </div>
+        <div class="td {{data.status_class}}" ng-repeat="data in accounts | filter:search | orderBy:predicate:reverse | limitTo:limitMax | limitTo: users_per_page" ng-class-odd="'odd'" ng-class-even="'even'" repeat-done="init_accounts();">
+            <div class="fst"><input type="checkbox" class="row_checker" ng-model="data.checked" ng-change="selectUser($index)" ng-checked="data.checked" /></div>
+            <div class="r2">{{data.org.organizationID}}</div>
+            <div class="r3">{{data.org.organizationName}}</div>
+            <div class="r4">
+                <select class="packages" ng-model="data.account.pricingPackage" ng-change="changePackages(data.account.id)">
+                    <option value="0">Tokens</option>
+                    <option value="2">Unlimited</option>
+<!--                    <option ng-repeat="package in packages" value="{{package.id}}" ng-selected="package.id==data.account.pricingPackage">{{package.name}}</option>-->
+                </select>
+            </div>
+            <div class="r5">{{data.account.regDate}}</div>
+<!--            <div class="r6">{{data.account.validUntil}}</div>-->
+            <div class="r7">
+                <input type="text" style="width:70px;" ng-model="data.account.tokens_c" ng-change="setAccountData(data.account.id,'tokens_c')" />
+            </div>
+            <div class="r7">
+                <input type="text" style="width:70px;" ng-model="data.account.tokens_limit" ng-change="setAccountData(data.account.id,'tokens_limit')" />
+            </div>
+<!--            <div class="r8"><button type="button" ng-click="setExpiry(data.account.id)">Set expiry date</button></div>-->
+            <br class="clr" />
+        </div>
+        
+    </div>
+    
+</div>
+</div>
+<div class="loader_beforeload {{finish_load}}">
+    <img src="img/wait_ge.gif" />
+</div>
+<style>
+    .accounts {
+        margin-bottom:100px;
+    }
+    .packages {
+        width:auto !important;
+        height:auto !important;
+        line-height:20px;
+        padding:0px;
+    }
+    
+    
+    .packages option {
+        padding:0px !important;
+    }
+    
+    .topPanel {
+        margin-top:14px;
+        height:30px;
+        display:block !important;
+    }
+    
+    .usersTable {
+        margin-top:10px !important;
+    }
+</style>

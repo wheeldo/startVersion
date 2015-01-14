@@ -1,0 +1,205 @@
+<div class="app_edit_container" ng-init="initSlideStar()">
+    <div class="nav_top">
+        <a href="javascript:void(0);" class="add" ng-click="addPlayerToGame()" ng-show="showAddPlayer">Add player</a>
+        <a href="javascript:void(0);" class="team" ng-click="teamOptionsOpen()" ng-show="copyData.appCopyTerminate==0">Resend invitation</a>
+        <a href="javascript:void(0);" class="load" ng-click="loadPreviousGames()">Load previous game</a>
+        <br class="clr" />
+    </div>
+    
+    <div class="general_details">
+        <h4>What is the game creator’s (your) email address? <img class="help" src="/img/help_icon30_30.png" popover='New questions that your game participants will create will be sent to this email address'  popover-placement="right" popover-trigger="mouseenter" /></h4>
+        <input class="inputMark autoSave" type="email" placeholder="e.g.:name@company.com" name="m_email" ng-model="editData.game.m_email" id="m_email" required ng-focus />
+        <br class="clr" />
+        <h4>Write your presentation title:</h4>
+        <div style="width:740px;margin-left:0px;">
+            <input class="inputMark autoSave" type="text" style="width:480px;" name="title" ng-model="editData.game.title" id="title" required ng-focus />
+            <h4 style="margin:0px;margin-left:3px;float:left;height:28px;line-height: 28px;">By:</h4>
+            <input class="inputMark autoSave" type="text" style="width:200px;float:right;" name="by" ng-model="editData.game.by" id="by" ng-minlength=1 ng-maxlength=50 maxlength="50" required ng-focus />
+        <br class="clr" />
+        </div>
+        
+    </div>
+    
+    <h4>Upload your Presentation: <img class="help" src="/img/help_icon30_30.png" popover='Once the presentation is uploaded, you will be able to write questions related to each slide.'  popover-placement="right" popover-trigger="mouseenter" /></h4>
+    <div class="group file selected">
+        <form id="file_upload_form" target="upload_target" method="post" enctype="multipart/form-data" action="/vendor/asposeConvertor/index.php?convert=1" my-load="testLoad()">
+            <input type="hidden" name="name" value="{{copyID}}" />
+            <div class="upload_row">
+                <input  type="file" name="file" ng-file-select="onSlideStarFileSelect($files)" /> 
+                <img src="img/wait_ge.gif" class="loadImage">
+            </div>
+        </form>
+        <iframe id="upload_target" name="upload_target" src="/vendor/asposeConvertor/index.php" style="width:0;height:0;border:0px solid #fff;"></iframe>
+        <div class="loading_bar"><div class="fill"></div> <div class="sent">Please wait while your presentation is uploading...</div></div>
+
+    </div>
+    
+    
+    <div class="slide_content wheeldo_slide">
+    </div>
+    
+    <div class="q_actions" ng-show="editData.slides.length>0">
+        <a href="javascript:void(0);" class="add" ng-click="addSlideQuestion()">Add a question</a>
+    </div>
+    <div class="questions_wrap slide{{$index}}" ng-repeat="slide in editData.slides" >
+    <h4>Questions for slide {{$index+1}}:</h4>
+    <div class="q_wrap" ng-class="{wait_for_approve:q.q_data.not_approved==1}" ng-repeat="q in slide.quiz" repeat-done="bindQuize()">
+        
+            <div class="q_visible">
+                <span class="order">
+                    <a href="javascript:void(0)"><img src="img/up.gif" /></a>
+                    <a href="javascript:void(0)"><img src="img/down.gif" /></a>
+                </span>
+                <span class="index">{{$index+1}}</span>
+                <span class="question">{{q.q_data.question}} <span ng-show="q.q_data.userID!=0">(By {{q.user_data.user_name}})</span></span>
+                <span class="show_options" q_hidden="{{$index}}">
+                    <a href="javascript:void(0);">answers</a>
+                </span>
+                <span class="remove" ng-show="q.q_data.not_approved"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="approveQSlide($index)">Approve</a></span>
+                <span class="remove"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="removeQSlide($index)">Remove</a></span>
+                <span class="edit"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="editQSlide($index)">Edit</a></span>
+                
+            </div>
+            <div class="q_hidden" q_hidden="{{$index}}">
+                <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='A']" ng-show="q.q_data.A.length"><label>1.</label>{{q.q_data.A}}<br class="clr" /></div>
+                <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='B']" ng-show="q.q_data.B.length"><label>2.</label>{{q.q_data.B}}<br class="clr" /></div>
+                <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='C']" ng-show="q.q_data.C.length"><label>3.</label>{{q.q_data.C}}<br class="clr" /></div>
+                <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='D']" ng-show="q.q_data.D.length"><label>4.</label>{{q.q_data.D}}<br class="clr" /></div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .q_actions {
+        margin:10px 0px;
+    }
+    .loading_bar {
+        height:20px;
+        display:none;
+        margin-top:5px;
+        
+    }
+    
+    .loading_bar .fill {
+        height:20px;
+        width:0%;
+        background-color:#4EC0EF;
+        float:left;
+    }
+    
+    
+    .loading_bar .sent {
+        position:absolute;
+        left:5px;
+        z-index:100;
+        font-size:12px;
+        height:20px;
+        line-height:20px;
+    }
+    
+    .questions_wrap {
+        display:none;
+    }
+    
+    .slide0 {
+        display:block;
+    }
+    .slide_content {
+        width:745px;
+        margin:20px 0px;
+    }
+    
+    .wheeldo_slide .action_bar {
+        margin-bottom:0px;
+    }
+    
+    .wheeldo_slide .action_bar .pn {
+        margin-top:0px;
+    }
+    .videoIframe {
+        border:2px solid gray;
+        margin:10px 0px;
+        width:200px;
+        height:150px;
+        display:none;
+    }
+    
+    
+    #vlink.youtube{
+        background-image: url('img/youtube_logo.png');
+        background-position:center right;
+        background-repeat:no-repeat;
+    }
+    
+    #vlink.vimeo{
+        background-image: url('img/vimeo_logo.png');
+        background-position:center right;
+        background-repeat:no-repeat;
+    }
+    
+    div.group {
+        padding:4px;
+        border:1px solid gray;
+        width:732px;
+        margin-left:0px;
+        opacity:0.7;
+        filter:alpha(opacity=70); /* For IE8 and earlier */
+    }
+    
+    div.group.selected {
+        opacity:1;
+        filter:alpha(opacity=100); /* For IE8 and earlier */
+        background-color:#ffffff;
+    }
+    
+    .app_edit_container h4 {
+        margin:10px 0px;
+    }
+    
+    input.inputMark {
+        width:722px;
+    }
+    
+    #description {
+        width:734px;
+    }
+    
+    textarea {
+        width:738px;
+        resize:none;
+        height:100px;
+    }
+    
+    .upload_row {
+        height:30px;
+        line-height:30px;
+        width:732px;
+        margin-left:0px;
+    }
+    
+    
+    .upload_row img.loadImage {
+        height:28px;
+        vertical-align:middle;
+        float:right;
+        display:none;
+    }
+    
+    .general_details {
+        margin:10px 0px;
+    }
+    
+    #m_email {
+        margin:5px 0px;
+        width:730px;
+    }
+    
+    h4 {
+        margin:5px 0px;
+    }
+    
+    .questions_wrap.waiting_for_approval,
+    .questions_wrap.waiting_for_approval .q_wrap {
+        border-color:red;
+    }
+</style>

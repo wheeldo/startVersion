@@ -1,0 +1,113 @@
+
+
+.wheeldo_slide .action_bar {
+    position:absolute;
+    bottom:0px;
+    height:40px;
+    line-height:40px;
+    padding:5px;
+    margin-bottom:10px;
+    background-image:url(../img/wheeldo_slide/action_bar.png);
+    background-repeat: repeat-x;
+}
+
+.wheeldo_slide .action_bar .pn {
+    height:40px;
+    line-height:40px;
+    width:200px;
+    text-align:center;
+}
+
+@-moz-document url-prefix() {
+    .wheeldo_slide .action_bar .pn {
+        margin-top: -5px;
+    }
+}
+
+.wheeldo_slide .action_bar .pn img {
+    vertical-align:middle;
+    cursor:pointer;
+}
+
+.wheeldo_slide .action_bar .pn img.small {
+    height:20px;
+}
+
+.wheeldo_slide .action_bar .slide_counter {
+    float:right;
+    height:30px;
+    position:absolute;
+    top:10px;
+    right:10px;
+    font-size:14px;
+}
+
+.wheeldo_slide .action_bar .slide_counter #curr_slide {
+    height:18px;
+    line-height:18px;
+    width:20px;
+    text-align:right;
+    font-size:14px;
+}
+
+.wheeldo_slide .slides_wrap {
+    background-color:#cdcdcc;
+    padding:10px;
+    margin-bottom:36px;
+}
+
+.wheeldo_slide .slides_wrap .img_wrap {
+    background-color:transparent;
+    width:100%;
+    height:100%;
+    line-height:100%;
+}
+
+#wheeldo_slide_img {
+    vertical-align:middle;
+    margin:3px;
+}
+
+.wheeldo_slide .action_bar .pn button {
+    display:inlide-block;
+    margin:0px;
+    padding:0px;
+    border:0px;
+    background-repeat:no-repeat;
+    background-color:transparent;
+    background-position:center center;
+    cursor:pointer;
+    
+}
+
+button.wheeldo_prev_slide {
+    height:40px;
+    width:40px;
+    background-image:url(../img/wheeldo_slide/Set2/prev.png);
+}
+
+button.wheeldo_prev_slide:hover {background-image:url(../img/wheeldo_slide/Set2/prev_hover.png);}
+
+button.wheeldo_next_slide {
+    height:40px;
+    width:40px;
+    background-image:url(../img/wheeldo_slide/Set2/next.png);
+}
+
+button.wheeldo_next_slide:hover {background-image:url(../img/wheeldo_slide/Set2/next_hover.png);}
+
+button.wheeldo_prev_end {
+    height:40px;
+    width:40px;
+    background-image:url(../img/wheeldo_slide/Set2/prev_end.png);
+}
+
+button.wheeldo_prev_end:hover {background-image:url(../img/wheeldo_slide/Set2/prev_end_hover.png);}
+
+button.wheeldo_next_end {
+    height:40px;
+    width:40px;
+    background-image:url(../img/wheeldo_slide/Set2/next_end.png);
+}
+
+button.wheeldo_next_end:hover {background-image:url(../img/wheeldo_slide/Set2/next_end_hover.png);}

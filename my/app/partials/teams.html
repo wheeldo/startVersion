@@ -1,0 +1,111 @@
+<div class="loader_afterload {{finish_load}}">
+<div class="teamsWrap" ng-init="init();">
+    <div class="topPanel" style="display:{{after_load}};">
+        <a class="sysButton green addEmployee" href="javascript:void(0)" disabled="">Add Employee</a>
+        <a class="sysButton green uploadCsv" href="javascript:void(0)" ng-click="uploadCsv()">Upload CSV File</a>
+        <a class="sysButton blue" href="javascript:void(0)" ng-click="removeUsers()">Remove</a>
+        
+        
+
+        <div class="dropdown" style="float:left;" ng-init="setTeamsDD()">
+          <a class="sysButton blue drop dropdown-toggle" href="javascript:void(0)" ng-click="updateTeamsInAssigmant()">Teams</a>
+          <div class="dropdown-menu assign_teams">
+              <h4>Assign Team</h4>
+              <input class="team_search" type="text" placeholder="Type to filter" ng-model="team_search" />
+              <hr />
+              <div class="assign_teams_wrap scroll-pane">
+                      <div class="team_to_assign checke_status_{{team.check_status}}" ng-repeat="team in teams | filter:team_search" repeat-done="setScrollPane()">
+                          <div class="check_team" ng-click="check_assign_team($index)"></div>
+                          <div class="team_name" ng-click="check_assign_team($index)">{{team.teamName}}</div>
+                          <div class="deleteTeam" ng-click="deleteTeam(team.teamID,team.teamName)"><img src="img/remove_team.png" /></div>
+                      </div>
+              </div>
+              <hr />
+              <div class="addNewTeamLinkWrap">
+                  <a href="javascript:void(0)" ng-click="addNewTeam()">New Team</a>
+                  <a href="javascript:void(0)" class="sysButton green" ng-click="applyAssignTeams()">Apply</a>
+                  <br class="clr" />
+              </div>
+          </div>
+        </div>
+
+
+        <input class="search autoTxT" id="team_filter" type="text" placeholder="Type to filter" ng-model="search" />
+        <div class="dd_wheeldo">
+            <input type="hidden" class="value" id="filter" />
+<!--            <div class="group_header trigger" def_val="All Results">All Results</div>
+            <div class="dd ddMenuCont">
+                <div>Filter column:</div>
+                <label class="checkbox">
+                        <input type="checkbox" value="name" def_val="Employee" /> Employee
+                </label>
+                <label class="checkbox">
+                        <input type="checkbox" value="email" def_val="Email" /> Email
+                </label>
+                <label class="checkbox">
+                        <input type="checkbox" value="teams" def_val="Teams" /> Teams
+                </label>
+                <label class="checkbox">
+                        <input type="checkbox" value="gamePlayed" def_val="Games Played" /> Games Played
+                </label>
+                <label class="checkbox">
+                        <input type="checkbox" value="admins" def_val="Admins" /> Admins
+                </label>
+            </div>-->
+            
+            
+        </div>
+        
+        <a class="sysButton blue pager" ng-click="goNextPage()"><img src="img/pagerR.png" /></a>
+        <a class="sysButton blue pager" ng-click="goPerviousPage()"><img src="img/pagerL.png" /></a>
+        <div class="amount"><strong>{{amount}}</strong> out of {{users.length}}</div>
+        <br class="clr" />
+    </div>
+    <div id="multi_check">
+        {{current_check}}  Employees selected
+        <a class="select_all_multi" href="javascript:void(0)" ng-click="selectAllEmployees()">Select/Deselect all {{total_users}} employees</a>
+        <a class="del" href="javascript:void(0)" ng-click="hideSelectAll()"><img src="img/del_icon.png" /></a>
+    </div>
+    <div class="mainData">
+        <div class="load_users" style="display:{{please_wait}};">
+            Loading your teams data, please wait...
+            <div id="progressbar"><div class="progress-label"></div></div>
+        </div>
+        <div class="creating_cache_bar"><div class="prlabel">Saving changes...</div><div class="proggress_bar"></div></div>
+        <div class="usersTable" ng-show="users_loaded">
+            <div class="th">
+                <div class="fst"><input type="checkbox" class="check_all" ng-model="check_all" ng-change="checkAll()" /></div>
+                <div class="name sort" ng-click="sortBy('name')" >Employee</div>
+                <div class="email sort" ng-click="sortBy('email')">Email</div>
+                <div class="teams sort" ng-click="sortBy('teams')">Teams</div>
+                <div class="gamePlayed sort" ng-click="sortBy('gamePlayed')">Game played</div>
+                <div class="admins sort">Admins</div>
+                <div class="edit">Edit</div>
+                <br class="clr" />
+            </div>
+            <div class="td" ng-repeat="user in users | filter:search |  filter:filterMultiple | orderBy:predicate:reverse | limitTo:limitMax | limitTo: users_per_page" ng-class-odd="'odd'" ng-class-even="'even'"  repeat-done="setCheckUser()">
+                <div class="fst"><input type="checkbox" class="row_checker" ng-model="user.checked" ng-change="selectUser($index)" ng-checked="user.checked" /></div>
+                <div class="name">{{user.name}}</div>
+                <div class="email">{{user.email}}</div>
+                <div class="teams">
+                    <div class="teamUser blueElement" ng-repeat="team in user.teams" team_id="{{team.id}}">
+                        {{team.name}} 
+<!--                        <a href="javascript:void(0)"><img src="img/del_icon_white.png" /></a>-->
+                    </div>
+                    
+                    <div class="teamUser blueElement gray" ng-show="user.teams.length==0">UNASSIGNED</div>
+                </div>
+                <div class="gamePlayed">{{user.gamePlayed}}</div>
+                <div class="admins">Admins</div>
+                <div class="edit"><a href="javascript:void(0)">Edit</a></div>
+                <br class="clr" />
+            </div>
+            
+        </div>
+        
+    </div>    
+</div>
+</div>
+<div class="loader_beforeload {{finish_load}}">
+    <img src="img/wait_ge.gif" />
+</div>

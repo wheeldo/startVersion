@@ -1,0 +1,58 @@
+<div class="userLogsrap" ng-init="init();">
+<div class="search_bar">
+    <div>
+        <input class="search autoTxT" id="team_filter" type="text" placeholder="Type to filter" ng-model="search" />
+        <select id="org_filter" ng-model="org_filter">
+            <option ng-repeat="org in orgs" value="{{org.organizationName}}">{{org.organizationName}}</option>
+        </select>
+        
+    </div>
+</div>
+    
+    
+<div class="usersTable">
+    <div class="th">
+        <div class="fst"><input type="checkbox" class="check_all" /></div>
+        <div class="userID sort" ng-click="sortBy('country')" >ID</div>
+        <div class="userName sort" ng-click="sortBy('userName')" >Name</div>
+        <div class="userEmail sort" ng-click="sortBy('userEmail')">Email</div>
+        <div class="userOrg sort" ng-click="sortBy('organization')">Organization</div>
+        <div class="userKind sort" ng-click="sortBy('kind')">Kind</div>
+        <div class="is_manager sort" ng-click="sortBy('manager')">Manager</div>
+        <div class="more">Actions</div>
+        <br class="clr" />
+    </div>
+    <div class="td" ng-repeat="user in users | filter:search | filter:org_filter | orderBy:predicate:reverse" ng-class-odd="'odd'" ng-class-even="'even'" repeat-done="init_users();">
+        <div class="fst"><input type="checkbox" class="row_checker" /></div>
+        <div class="userID">{{user.userID}}</div>
+        <div class="userName">{{user.userName}}</div>
+        <div class="userEmail">{{user.userEmail}}</div>
+        <div class="userOrg">{{user.organizationName}}</div>
+        <div class="userKind">{{user.userUserKindID}}</div>
+        <div class="is_manager">{{user.is_manger}}</div>
+        <div class="more">
+            <a class="action show_logs" userID="{{user.userID}}" href="javascript:void(0)">Watch Logs</a>
+            <a class="action edit_details" userID="{{user.userID}}" href="javascript:void(0)">Edit Details</a>
+            <a class="action reset_password" userID="{{user.userID}}" href="javascript:void(0)">Reset Password</a>
+        </div>
+        <br class="clr" />
+   </div>
+</div>
+
+    
+    <div class="dialog">
+        <div class="edit_details">
+            <div><label>Name:</label> <input type="text" id="userName" ng-model="edited_user.userName" /><br class="clr" /></div>
+            <div><label>Email:</label> <input type="text" id="userEmail" ng-model="edited_user.userEmail" /><br class="clr" /></div>
+            <div><label>Organization:</label> 
+                <select ng-model="edited_user.userOrganizationID" ng-options="org.organizationID for org in orgs">
+   
+                </select>
+            <br class="clr" /></div>
+            <div><label>Kind:</label> <input type="text" id="userUserKindID" ng-model="edited_user.userUserKindID" /><br class="clr" /></div>
+            
+
+        </div>
+    </div>
+    
+</div>

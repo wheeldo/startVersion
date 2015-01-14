@@ -1,0 +1,40 @@
+div.wheeldoSliderFadeBG {
+    height: auto;
+    width: auto;
+    overflow-x: auto;
+    overflow-y: scroll;
+    bottom: 0;
+    position: fixed;
+    right: 0;
+    background: url("../img/fade_overlay.png") repeat scroll 0 0 transparent;
+    left: 0;
+    overflow: hidden;
+    top: 0;
+    z-index: 8010;
+    display:none;
+}
+
+div.wheeldoSlider {
+    left:0;
+    width:100%;
+    padding:10px;
+    z-index: 8012;
+    position:absolute;
+    display:none;
+    z-index: 8012;
+}
+
+
+div.slide_screen {
+    background-color:#ffffff;
+    width:auto;
+    position:absolute;
+    margin:0px auto;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    width:760px;
+    height:510px;
+    top:0;
+    padding:15px 20px;
+    z-index: 8014;
+}

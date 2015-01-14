@@ -1,0 +1,499 @@
+<div class="loader_afterload {{finish_load}}">
+<div class="purchase_wrapper">
+    
+    <div id="createShopperForm">
+        <h3 style="margin-bottom:20px;">We need some more details to continue:</h3>
+        <div class="content bootstrap_form" style="width:400px;margin-left:0px;">
+            <div class="form-group">
+                <label for="exampleInputEmail1"><span class="mandatory">*</span> First name:</label>
+              <input type="text" class="form-control" name="firstName" ng-minlength=2 placeholder="First name" ng-model="user_details.firstName">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1"><span class="mandatory">*</span> Last name:</label>
+              <input type="text" class="form-control" name="lastName" placeholder="Last name" ng-model="user_details.lastName">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1"><span class="mandatory">*</span> Address:</label>
+              <input type="text" class="form-control" name="address1" placeholder="Address" ng-model="user_details.address1">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1"><span class="mandatory">*</span> City:</label>
+              <input type="text" class="form-control" name="city" placeholder="City" ng-model="user_details.city">
+            </div>
+            <div class="form-group state">
+              <label for="exampleInputEmail1"><span class="mandatory">*</span> State:</label>
+               <select name="state" style="height:30px;padding:0px;" class="form-control" ng-model="user_details.state">
+                  <option value="{{state.code}}" ng-repeat="state in states">{{state.name}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1"><span class="mandatory">*</span> Country:</label>
+              <select name="country" style="height:30px;padding:0px;" class="form-control" ng-model="user_details.country" ng-change="checkForState()">
+                  <option value="{{country.code}}" ng-repeat="country in countries">{{country.name}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1"><span class="mandatory">*</span> Zip code:</label>
+              <input type="text" class="form-control" name="zipCode" placeholder="Zip code" ng-model="user_details.zipCode" >
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1"><span class="mandatory">*</span> Phone:</label>
+              <input type="text" class="form-control" name="phone" placeholder="Phone" ng-model="user_details.phone">
+            </div>
+           <button type="button" class="btn btn-default" ng-click="createShopper()">Continue</button>
+        </div>
+    </div>
+    
+<div id="table-wrap" ng-init="purchase_init()">
+	<table id="price-table">
+        <colgroup>
+            <col span="1" id="colspan1">
+            <col span="5" id="colspan2">
+        </colgroup>
+    	<thead>
+            <th class="bb-0"></th>
+
+            <th>
+            	<h5 class="th-type">Silver</h5>
+<!--                <p class="th-desc">Roll it out in your <br/>department</p>-->
+			</th>
+            <th>
+            	<h5 class="th-type">Gold</h5>
+<!--                <p class="th-desc">Roll it out in your<br/> department</p>-->
+			</th>
+            <th>
+            	<h5 class="th-type">Platinum</h5>
+<!--                <p class="th-desc">Small to medium<br/> companies </p>-->
+			</th>
+            <th>
+            	<h5 class="th-type">Need more?</h5>
+<!--                <p class="th-desc">Go pro with a dedicated<br/> customer service rep</p>-->
+			</th>
+        </thead>
+        
+        <tr id="price-row">
+            <td class="bt-0 col1-td">Game tokens <br />
+                <span style="font-weight:normal;font:12px/1.231 arial,helvetica,clean,sans-serif;">(1 game token = 1 player per game)</span></td>
+            <td style="font-size:24px;">30</td>
+            <td style="font-size:24px;">50</td>
+            <td style="font-size:24px;">100</td>
+            <td style="font-size:24px;">
+                <input placeholder="Insert # of tokens" style="width:150px;text-align:center;font-size:12px;height:30px;" type="text" ng-change="getCalcPrice()" ng-model="quote_users" />
+            </td>
+        </tr>
+        <tr id="max-train">
+            <td class="bt-0 col1-td">
+                Price<br/>
+            </td>
+            <td><sup><span class="dollar-sign">$</span></sup><span class="dollar-num">199</span></td>
+            <td><sup><span class="dollar-sign">$</span></sup><span class="dollar-num">299</span></td>
+            <td><sup><span class="dollar-sign">$</span></sup><span class="dollar-num">499</span></td>
+            <td><sup><span ng-show="quote_price>0" class="dollar-sign">$</span></sup><span class="dollar-num">{{quote_price}}</span></td>
+            
+            
+        </tr>
+        <tr>
+            <td class="bt-0 col1-td">Access to all games</td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+        </tr>
+<!--        <tr>
+            <td class="bt-0 col1-td">Admin</td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+        </tr>-->
+<!--        <tr>
+            <td class="bt-0 col1-td">Social learning</td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+        </tr>-->
+        <tr>
+            <td class="bt-0 col1-td">Mobile access </td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+        </tr>
+        <tr>
+            <td class="bt-0 col1-td">Unlimited content</td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+            <td class="table-v"></td>
+        </tr>
+        <tr class="table-reports">
+            <td class="bt-0 col1-td">Reports</td>
+            <td>Real time + Insights </td>
+            <td>Real-time + Insights<br/></td>
+            <td>Real-time + Insights<br/> + Export data</td>
+            <td>Real-time + Insights<br/> + Custom reports </td>
+        </tr>
+        <tr class="table-reports">
+            <td class="bt-0 col1-td">Support</td>
+            <td>Email</td>
+            <td>Email + Phone</td>
+            <td>Email + Phone + Dedicated customer service rep</td>
+            <td>Email + Phone + Dedicated customer service rep</td>
+        </tr>
+        <tr>
+            <td class="bt-0 col1-td">Admins</td>
+            <td class="th-type"> 1 </td>
+            <td class="th-type"> 1 </td>
+            <td class="th-type"> 2 </td>
+            <td class="th-type">-</td>
+        </tr>
+<!--        <tr>
+            <td class="bt-0 col1-td">Design your own game</td>
+            <td class="tabel-dash"> &minus; </td>
+            <td class="tabel-dash"> &minus; </td>
+            <td class="tabel-dash"> &minus; </td>
+            <td class="table-v"></td>
+        </tr>
+        <tr>
+            <td class="bt-0 col1-td">API</td>
+            <td class="tabel-dash"> &minus; </td>
+            <td class="tabel-dash"> &minus; </td>
+            <td class="tabel-dash"> &minus; </td>
+            <td class="table-v"></td>
+        </tr>-->
+        <tr id="start-now-row" style="height:60px;">
+            <td class="bt-0 col1-td"></td>
+            <td> 
+            	<button class="sign_green1" type="button" ng-click="buy_now(30)">Buy now</button>
+            </td>
+            <td> 
+            	<button class="sign_green1" type="button" ng-click="buy_now(50)">Buy now</button>
+            </td>
+            <td> 
+            	<button class="sign_green1" type="button" ng-click="buy_now(100)">Buy now</button>
+            </td>
+            <td> 
+            	<button class="sign_green1" ng-show="quote_price>0" type="button" ng-click="buy_now(quote_users)">Buy now</button>
+            </td>
+        </tr>
+    </table>
+    <div id="tabel-shadow"></div>	
+</div>    
+</div>
+</div>
+    <style>
+
+        .purchase_wrapper {
+            margin-top:50px;
+        }
+
+#start-now-row .sign_green1 {
+    position:relative;
+    margin:6px auto;
+}
+
+
+		
+
+.bt-0{
+	border-top:0 !important;}
+.bb-0{
+	border-bottom:0 !important;}
+	
+#logo{
+	display:block;
+	float:left;
+	width:194px;
+	height:33px;
+	margin-right:30px;
+	background:url(img/logo.png);
+	}		
+#main-nav{
+	float:left;
+	margin-top:15px;}	
+#main-nav li{
+	float:left;
+	margin-right:24px;
+	font-size:15px;
+	color:#222222;
+	font-family:ARB;}	
+#main-nav li.last{
+	margin-right:0;}	
+.btn1{
+	display:block;
+	width:107px;
+	height:36px;
+	font-family:ARB;
+	font-size:13px;
+	color:#fff;
+	line-height:32px;
+	text-align:center;
+	}	
+.btn1:hover,
+.btn1.pressed{
+	background-position:0 -36px;}	
+.btn1.blue{
+	background-image:url(img/btn-blue.png);}	
+.btn1.green{
+	background-image:url(img/btn-green.png);}	
+#sign-up,
+#login{
+	float:right;
+	margin-top:5px;}
+#sign-up{
+	margin-left:5px;}
+#page-title-holder{
+	width:100%;
+	height:128px;
+	margin-bottom:70px;
+	background:url(img/page-title-holder.png);}	
+#page-title{
+	color:#26ade3;
+	font-size:55px;
+	font-family:ARB;
+	margin-top:30px;}		
+
+
+/*Footer*/	
+#footer-top{
+	width:100%;
+	background-color:#222222;
+	padding:40px 0;
+	margin-top:70px;
+}
+#footer-bot{
+	width:100%;
+	height:25px;
+	background-color:#383838;
+}
+#copyr{
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	font-size:12px;
+	line-height:25px;}
+#f-col1{
+	width:313px;}
+#f-col2{
+	width:304px;}
+#f-col3{
+	width:322px;}
+.f-col-title{
+	font-size:18px;
+	color:#fff;
+	font-family:ARB;
+	margin-bottom:10px;}
+#f-col1-nav{}
+#f-col1-nav li{}
+#f-col1-nav li a{
+	font-size:18px;
+	line-height:30px;
+	color:#fff;
+	font-family:Arial, Helvetica, sans-serif;}
+#f-social{
+	margin-top:15px;}
+#f-social li{
+	margin-bottom:5px;}
+#f-social li a{
+	display:block;
+	padding-left:35px;
+	font-size:16px;
+	line-height:30px;
+	color:#fff;
+	font-family:Arial, Helvetica, sans-serif;
+	background-repeat:no-repeat;
+	background-position:0 50%;}
+
+#f-social-f{
+	background-image:url(img/social-f.png);}
+#f-social-t{
+	background-image:url(img/social-t.png);}
+#f-social-g{
+	background-image:url(img/social-g.png);}
+#f-social-i{
+	background-image:url(img/social-i.png);}
+	
+#f-contact{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;
+	color:#fff;}
+#f-contact p{
+	margin-bottom:5px;}	
+#f-contact label{
+	float:left;
+	width:80px;
+	margin-top:7px;}		
+#f-contact .f-contact-inp{
+	width:236px;
+	height:25px;
+	padding:3px;
+	background:url(img/foot-inp.png);
+	border:none;
+	color:#fff;}	
+#f-contact .f-contact-ta{
+	width:236px;
+	height:65px;
+	padding:3px;
+	background:url(img/foot-ta.png);
+	border:none;
+	resize:none;
+	color:#fff;}	
+#f-cont-submit{
+	float:right;
+	border:0;
+	background-color:transparent;
+	cursor:pointer;}	
+
+
+/*Pricing Table*/	
+#table-wrap{
+	position:relative;
+	background:url(img/table-wrap.png) repeat;
+	padding:3px;
+	}
+#tabel-shadow{
+	position:absolute;
+	left:-130px;
+	bottom:-44px;
+	width:1200px;
+	height:47px;
+	background:url(img/pr-table-bot-shadow.png);}		
+#price-table{
+	border-collapse:collapse;
+	border:#cfcfcf 1px solid;
+        width:100%;
+}
+#colspan1{
+	background-color:#fbfbfb;
+	width:193px;
+	}
+#colspan2{
+	background-color:#fff;
+	}	
+#price-table th{
+	background-color:#fbfbfb !important;
+	border-style:solid !important;
+	padding:15px 0;
+	}
+#price-table td,
+#price-table th{
+	width:145px;
+	border-color:#cfcfcf;
+	border-top-width:1px;
+	border-bottom-width:1px;
+	border-left-width:1px;
+	border-right-width:1px;
+	border-top-style:dashed;
+	border-bottom-style:dashed;
+	border-left-style:solid;
+	border-right-style:solid;}
+	
+
+.th-type{
+	margin-bottom:6px;
+	font-size:18px;
+	color:#222;
+	font-family:ARB;
+	text-transform:uppercase;
+        text-align:center;
+}
+
+#price-table p {
+    text-align:center;
+}
+.th-desc{
+	font-size:12px;
+	font-weight:normal;
+	color:#444;}
+.col1-td{
+	padding:15px 0 15px 12px;
+	font-size:16px;
+	color:#222;
+	font-family:ARB;
+	text-align:left;
+	}	
+.col1-td-desc{
+	font-size:14px;}
+#max-train{
+	font-family:Helvetica;
+	font-size:24px;
+	text-align:center;
+}
+#price-row{
+	text-align:center;}
+.dollar-sign{
+	font-family:Helvetica Bold;
+	font-size:24px;
+	}
+.dollar-num{
+	font-family:ARB;
+	font-size:36px;
+	}
+.per-month{
+	font-family:DroidSerif-BI;
+	font-size:11px;
+	color:#9d9d9d;
+	font-style:italic;
+	}
+.price-contact{
+	font-family:Helvetica Bold;
+	font-size:18px;
+	text-decoration:underline;
+	}
+.table-v{
+	background:url(img/price-table-v.png) 50% 50% no-repeat;}
+.table-reports{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#444;
+	text-align:center;
+	}
+.tabel-dash{
+	font-family:ARB;
+	font-size:36px;
+	color:#222;
+	text-align:center;
+	}
+.table-btn{
+	display:block;
+	width:144px;
+	height:39px;
+	margin:2px 0 0 2px;
+        margin:4px auto;
+        position:relative;
+	font-size:13px;
+	color:#fff;
+	text-align:center;
+	line-height:39px;
+	font-family:Arial, Helvetica, sans-serif;
+	background:url(img/btn-table-green.png);}
+.tabele-btn .free-trial{
+	font-family:ARB;}	
+.table-btn:hover,
+.table-btn.pressed{
+	background-position:0 -39px;}
+
+.signUpBinder {
+ padding-top:0px;   
+}
+
+.sign_green1 {
+    background: linear-gradient(to bottom, #91D039 0%, #62B417 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #91D039;
+    border-radius: 4px;
+    box-shadow: 0 2px 0 1px #09501A;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: block;
+    height: 32px;
+    line-height: 32px;
+    margin: 0;
+    padding: 0px 10px;
+    text-align: center;
+}
+    </style>
+    
+    </div>
+<div class="loader_beforeload {{finish_load}}">
+    <img src="img/wait_ge.gif" />
+</div>

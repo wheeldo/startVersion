@@ -1,0 +1,105 @@
+<table class="table table-striped" style="width:400px;" ng-init="setVoterReport()">
+    <tr ng-repeat="stat in reportData.stats">
+        <th>{{stat.title}}</th>
+        <td>{{stat.content}}</td>
+    </tr>
+</table>
+
+<div class="stat_block on_run">
+    <h4>On Run Statistics:</h4>
+    <div class="info"><label>Active players:</label> {{active_players}}</div>
+    <div class="info"><label>Answers by users:</label> {{challenges_by_users}}</div>
+
+    <div google-chart chart="chart_participants" style="{{chart.cssStyle}}" class="chart_small" on-ready="chartReady()" />
+    
+    <div google-chart chart="chart_success" style="{{chart.cssStyle}}" class="chart_small" on-ready="chartReady()" />
+    
+    <div google-chart chart="chart_users_answers" style="{{chart.cssStyle}}" class="chart_small" on-ready="chartReady()" />
+     <br class="clr" />
+    
+    <div google-chart chart="chart_users_scores" style="{{chart.cssStyle}};border:1px solid #BEBEBE;" class="chart_big" on-ready="chartReady()" />
+    
+    <br class="clr" />
+</div>
+    
+<div class="stat_block insights">
+    <h4>Insights:</h4>
+    <div class="info"><label>Leading Idea:</label> {{leading_idea.idea}} ({{leading_idea.points}} points)</div>
+    <div class="info"><label>The most active player (Ideas):</label> {{mostActivePlayer.name}} ({{mostActivePlayer.counter}} ideas)</div>
+    <div class="info"><label>Most rated player:</label> {{mostRatedPlayer.name}} ({{mostRatedPlayer.c}} votes)</div>
+    <div class="info"><label>The most voted idea:</label> {{mostRatedIdea.idea}} ({{mostRatedIdea.c}} votes)</div>
+    <br class="clr" />
+
+</div>
+    
+<div class="stat_block data">
+    <h4>Data:</h4>
+    <br class="clr" />
+    
+    <div class="data_type" data_type="questions">
+        <div class="comp_stat_wrap">
+            <div class="switch_view_wrap">
+                <a href="javascript:void(0)" ng-click="downloadCsvFile('chart_answers')"><img src="img/csvIcon.png" /> Download CSV file</a>
+            </div>
+            <div google-chart chart="chart_answers" style="{{chart.cssStyle}}" class="chart_big" on-ready="chartReady()" />
+        </div>
+        <br class="clr" />
+    </div>
+    
+</div>
+<style>
+    div.info {
+        margin:10px 0px;
+    }
+    
+    div.info label {
+        display:inline;
+        font-weight:bold;
+        cursor:default;
+    }
+    .stat_block {
+        padding:20px 0px;
+        border-bottom:1px solid #BEBEBE;
+    }
+    
+    .stat_block h4{
+        text-decoration:underline;
+    }
+    
+    .chart_small {
+        float:left;
+        margin:10px 22px;
+        border:0px solid #BEBEBE;
+    }
+    
+    .comp_stat_wrap {
+        border:0px solid #BEBEBE;
+    }
+    
+    .switch_view_wrap {
+        margin:10px 0px;
+    }
+    
+    .switch_view_wrap button {
+        margin-right:10px;
+    }
+    
+    
+    .google-visualization-table-td-number {
+        text-align:center;
+    }
+    
+    .answer_tooltip {
+        padding:10px;
+    }
+    
+    .answer_tooltip th {
+        text-align:left;
+        padding-right:10px;
+    }
+    
+    .answer_tooltip img {
+        max-width:100px;
+    }
+</style>
+

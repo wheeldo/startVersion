@@ -1,0 +1,106 @@
+<table class="table table-striped" style="width:400px;" ng-init="setSlideStarReport()">
+    <tr ng-repeat="stat in reportData.stats">
+        <th>{{stat.title}}</th>
+        <td>{{stat.content}}</td>
+    </tr>
+</table>
+
+<div class="stat_block on_run">
+    <h4>On Run Statistics:</h4>
+    <div class="info"><label>Active players:</label> {{active_players}}</div>
+    <div class="info"><label>Challenges by users:</label> {{challenges_by_users}}</div>
+    <div class="info"><label>Leader:</label> {{leader.name}} ({{leader.score}} points)</div>
+    <div google-chart chart="chart_participants" style="{{chart.cssStyle}}" class="chart_small" on-ready="chartReady()" />
+    
+    <div google-chart chart="chart_success" style="{{chart.cssStyle}}" class="chart_small" on-ready="chartReady()" />
+    
+    <div google-chart chart="chart_users_answers" style="{{chart.cssStyle}}" class="chart_small" on-ready="chartReady()" />
+     <br class="clr" />
+    
+    <div google-chart chart="chart_users_scores" style="{{chart.cssStyle}};border:1px solid #BEBEBE;" class="chart_big" on-ready="chartReady()" />
+    
+    <br class="clr" />
+</div>
+    
+<div class="stat_block insights">
+    <h4>Insights:</h4>
+    <div class="info"><label>The most difficult question:</label> {{most_difficult_question.question}} ({{most_difficult_question.rate}}% success)</div>
+    <div class="info"><label>Expert player:</label> {{leading_in_answers.name}} ({{leading_in_answers.rate}}%)</div>
+    <div class="info"><label>Least expert player:</label> {{final_in_answers.name}} ({{final_in_answers.rate}}%)</div>
+    <div class="info"><label>Top challengers:</label> <span ng-repeat="user in top_chalegers">{{user}}<span ng-show="$index<top_chalegers.length-1">, </span></span> ({{top_challengers_number}} challenges)</div>
+    
+    <br class="clr" />
+
+</div>
+    
+<div class="stat_block data">
+    <h4>Data:</h4>
+    <br class="clr" />
+    
+    <div class="data_type" data_type="users">
+        <div class="comp_stat_wrap">
+            <h5>Users:</h5>
+            <div class="switch_view_wrap">
+                <a href="javascript:void(0)" ng-click="downloadCsvFile('chart_users')"><img src="img/csvIcon.png" /> Download CSV file</a>
+            </div>
+            <div google-chart chart="chart_users" style="{{chart.cssStyle}}" class="chart_big" on-ready="chartReady()" />
+        </div>
+        <br class="clr" />
+    </div>
+        
+        
+    <div class="data_type" data_type="questions">
+        <div class="comp_stat_wrap">
+            <h5>Questions:</h5>
+            <div class="switch_view_wrap">
+                <a href="javascript:void(0)" ng-click="downloadCsvFile('chart_questions')"><img src="img/csvIcon.png" /> Download CSV file</a>
+            </div>
+            <div google-chart chart="chart_questions" style="{{chart.cssStyle}}" class="chart_big" on-ready="chartReady()" />
+        </div>
+        <br class="clr" />
+    </div>
+    
+</div>
+<style>
+    div.info {
+        margin:10px 0px;
+    }
+    
+    div.info label {
+        display:inline;
+        font-weight:bold;
+        cursor:default;
+    }
+    .stat_block {
+        padding:20px 0px;
+        border-bottom:1px solid #BEBEBE;
+    }
+    
+    .stat_block h4{
+        text-decoration:underline;
+    }
+    
+    .chart_small {
+        float:left;
+        margin:10px 22px;
+        border:0px solid #BEBEBE;
+    }
+    
+    .comp_stat_wrap {
+        border:0px solid #BEBEBE;
+    }
+    
+    .switch_view_wrap {
+        margin:10px 0px;
+    }
+    
+    .switch_view_wrap button {
+        margin-right:10px;
+    }
+    
+    
+    .google-visualization-table-td-number {
+        text-align:center;
+    }
+</style>
+

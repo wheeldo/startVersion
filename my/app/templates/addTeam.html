@@ -1,0 +1,14 @@
+<form  name="q_form">
+<div id="addTeamModalInWrap" ng-init="initCtrl();" ng-cloak="testMe()">
+    <h3>New Team</h3>
+    <div style="margin-top:20px;">
+        <input class="inputMark" type="text" placeholder="Enter a name for your new team" name="name" id="text" ng-model="team.name"  ng-minlength=3 ng-maxlength=90 maxlength="90" required ng-focus  />
+        <br class="clr" />
+    </div>
+    <div class="actions_wrap" content-load="contentLoad()">
+         <button type="button" class="system_button blue_button" style="float:left;" ng-click="cancel()">Cancel</button>
+         <button type="button" class="system_button green_button" style="float:right;" ng-click="createTeam()" ng-disabled="!team.name">Create</button>
+         <br class="clr" />
+    </div>
+</div>
+</form>

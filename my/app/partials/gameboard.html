@@ -1,0 +1,42 @@
+<div id="content">
+    <div class="right_info">
+
+    </div>
+    <div class="data appStore">
+
+    <div class="app_cont" ng-repeat="app in apps" id="app_{{app.appID}}">
+        <div class="app_icon_wrap">
+            <img src="{{app.icon}}" alt="app name" />
+        </div>
+        <div class="app_info_wrap">
+            <input type="hidden" id="app_loaded_{{app.appID}}" value="0" />
+            <div class="left">
+                <h2>{{app.name}}</h2>
+                <div class="short_desc">
+                    {{app.slogen}}
+                </div>
+                <div class="app_actions">
+                    <a href="javascript:void(0)" class="button_green button_app create_game event_log" log_type="create_game" log_more="App Name: {{app.name}}" appID="{{app.appID}}">Create Game</a>
+                    <a href="javascript:void(0)" class="app_extra learn_more event_log" app_id="{{app.appID}}" log_type="learn_more" log_more="App Name: {{app.name}}">Learn more</a>
+                    <div class="seperator"></div>
+
+                        <a class="app_extra run_demo various fancybox.iframe event_log" href="{{app.video}}" log_type="demo" log_more="App Name: {{app.name}}" >Demo</a>
+
+
+                </div>
+            </div>
+            <div class="right">
+                <h5>Game categories</h5>
+                <div class="category" ng-repeat="category in app.categories">{{category.categoryName}}</div>
+
+    <!--                                <div class="more"><a href="javascript:void(0)">+3 more</a></div>-->
+            </div>
+            <br class="clr" />
+        </div>
+        <div class="more_info" id="more_info_{{app.appID}}">
+            <div class="learn_more_arrow"></div>
+
+        </div>
+        <br class="clr" />
+    </div>
+</div>

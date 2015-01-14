@@ -1,0 +1,529 @@
+<div class="app_edit_container" ng-init="initTrivia()">
+    <div class="nav_top">
+        <a href="javascript:void(0);" class="add" ng-click="addTriviaQuestion()">Add a question</a>
+        <a href="javascript:void(0);" class="upload" ng-click="uploadCsvFileTrivia()">Upload questions file</a>
+<!--        <a href="javascript:void(0);" class="template" ng-click="designTemplatesOpen()">Design templates</a>-->
+        <a href="javascript:void(0);" class="edit" ng-click="advancedSettingsOpen()">Advanced settings</a>
+        <a href="javascript:void(0);" class="add" ng-click="addPlayerToGame()" ng-show="showAddPlayer">Add player</a>
+        <a href="javascript:void(0);" class="team" ng-click="teamOptionsOpen()" ng-show="copyData.appCopyTerminate==0">Resend invitation</a>
+        <a href="javascript:void(0);" class="load" ng-click="loadPreviousGames()">Load previous game</a>
+        <br class="clr" />
+    </div>
+    
+    
+    <div class="data_wrap_content edit_data active">
+            <div class="general_details">
+                <h4>What is the game creator’s (your) email address? <img class="help" src="/img/help_icon30_30.png" popover='New questions that your game participants will create will be sent to this email address.'  popover-placement="right" popover-trigger="mouseenter" /></h4>
+                <input class="inputMark autoSave" type="email" placeholder="e.g.:name@company.com" name="m_email" ng-model="editData.game.m_email" id="m_email" required ng-focus />
+                <br class="clr" />
+<!--                <h4><input type="checkbox" class="autoSaveChange" ng-model="editData.game.share" ng-true-value="1" ng-true-value="0" /> Display Facebook share button?</h4>-->
+                <div class="option checkbox">
+                    <label>
+                        <input type="checkbox" class="autoSaveChange" ng-model="editData.game.share" ng-true-value="1" ng-true-value="0" />
+                        Display Facebook share button?
+                    </label>
+                </div>
+
+                <div class="option checkbox">
+                    <label>
+                        <input type="checkbox" class="autoSaveChange" ng-model="editData.game.invite_button" ng-true-value="1" ng-true-value="0" />
+                        Display invite friend button?
+                    </label>
+                </div>
+
+                <div class="option checkbox">
+                    <label>
+                        <input type="checkbox" class="autoSaveChange" ng-model="editData.game.user_add_challenge" ng-true-value="1" ng-true-value="0" />
+                        Allow user to add challenges?
+                    </label>
+                </div>
+                <br class="clr" />
+            </div>
+            <h4 ng-show="editData.quiz.length>0">Questions:</h4>
+            <div class="questions_wrap" ng-show="editData.quiz.length>0">
+
+                <div class="q_wrap" ng-repeat="q in editData.quiz" repeat-done="bindQuize()">
+                    <div class="q_visible">
+                        <span class="order">
+                            <a href="javascript:void(0)" ng-click="TriviaQUp($index)"><img src="img/up.gif" /></a>
+                            <a href="javascript:void(0)"ng-click="TriviaQDown($index)"><img src="img/down.gif" /></a>
+                        </span>
+                        <span class="index">{{$index+1}}</span>
+                        <span class="question">{{q.q_data.question}} <span ng-show="q.q_data.userID!=0">(By {{q.user_data.user_name}})</span></span>
+                        <span class="show_options" q_hidden="{{$index}}">
+                            <a href="javascript:void(0);">answers</a>
+                        </span>
+                        <span class="remove"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="removeQTrivia($index)">Remove</a></span>
+                        <span class="edit"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="editQTrivia($index)">Edit</a></span>
+
+                    </div>
+                    <div class="q_hidden" q_hidden="{{$index}}">
+                        <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='A']" ng-show="q.q_data.A.length"><label>1.</label>{{q.q_data.A}}<br class="clr" /></div>
+                        <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='B']" ng-show="q.q_data.B.length"><label>2.</label>{{q.q_data.B}}<br class="clr" /></div>
+                        <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='C']" ng-show="q.q_data.C.length"><label>3.</label>{{q.q_data.C}}<br class="clr" /></div>
+                        <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='D']" ng-show="q.q_data.D.length"><label>4.</label>{{q.q_data.D}}<br class="clr" /></div>
+                    </div>
+                </div>
+            </div>
+
+            <h4 style="margin-top:20px;" ng-show="editData.waitForApprooval.length>0">Waiting for approval</h4>
+            <div class="questions_wrap waiting_for_approval" ng-show="editData.waitForApprooval.length>0">
+                <div class="q_wrap" ng-repeat="q in editData.waitForApprooval" repeat-done="bindQuize()">
+                    <div class="q_visible">
+                        <span class="order">
+                            <a href="javascript:void(0)"><img src="img/up.gif" /></a>
+                            <a href="javascript:void(0)"><img src="img/down.gif" /></a>
+                        </span>
+                        <span class="index">{{$index+1}}</span>
+                        <span class="question">{{q.q_data.question}} <span ng-show="q.q_data.userID!=0">(By {{q.user_data.user_name}})</span></span>
+                        <span class="show_options" q_hidden="{{$index}}">
+                            <a href="javascript:void(0);">answers</a>
+                        </span>
+                        <span class="remove"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="approveQTrivia($index)">Approve</a></span>
+                        <span class="remove"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="removeQTrivia($index,true)">Remove</a></span>
+                        <span class="edit"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="editQTrivia($index,true)">Edit</a></span>
+
+                    </div>
+                    <div class="q_hidden" q_hidden="{{$index}}">
+                        <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='A']" ng-show="q.q_data.A.length"><label>1.</label>{{q.q_data.A}}<br class="clr" /></div>
+                        <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='B']" ng-show="q.q_data.B.length"><label>2.</label>{{q.q_data.B}}<br class="clr" /></div>
+                        <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='C']" ng-show="q.q_data.C.length"><label>3.</label>{{q.q_data.C}}<br class="clr" /></div>
+                        <div class="answer" ng-class="{true:'currect'}[q.q_data.answer=='D']" ng-show="q.q_data.D.length"><label>4.</label>{{q.q_data.D}}<br class="clr" /></div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="data_wrap_content settings_data">
+        <tabset>
+            <tab heading="Design templates">
+                        <div class="templates_header" ng-init="designTemplatesOpen()">
+                            Select templates:
+
+                            <select ng-model="template_selected" ng-options="template.name for template in templates" ng-change="select_template()">
+                <!--                <option ng-repeat="template in templates" value="{{template.id}}">{{template.name}}</option>-->
+                            </select>
+
+                            <a href="javascript:void(0)" class="create_new_template" ng-click="createNewTemplate(template_selected)">Create new from this template</a>
+                        </div>
+
+                        <div class="template_parts" ng-show="template_selected">
+                            <div class="note red" ng-show="template_selected.orgID==0">This template is locked for editing (changes will not be saved)</div>
+                            <div class="note save_templates_text"></div>
+                            <input type="hidden" id="template_id" value="{{template_selected.id}}" />
+
+                            <div class="design_element_row">
+                                <div class="name">
+                                    Name:
+                                </div>
+                                <div class="data">
+                                    <input type="text" ng-model="template_selected.name" class="autoSaveTemplate" />
+                                </div>
+                                <br class="clr" />
+                            </div>
+
+                            <div class="design_element_row">
+                                <div class="name">
+                                    Color set 1:
+                                </div>
+                                <div class="data">
+                                    <div style="float:left;">Color: <ui-colorpicker ng-model="template_selected.color_set_1"></ui-colorpicker></div>
+                                    <div style="float:left;margin-left:20px;">Hexadecimal value: <input ng-model='template_selected.color_set_1' class="autoSaveTemplate" /></div>
+                                </div>
+                                <br class="clr" />
+                            </div>
+
+
+                            <div class="design_element_row">
+                                <div class="name">
+                                    Color set 2:
+                                </div>
+                                <div class="data">
+                                    <div style="float:left;">Color: <ui-colorpicker ng-model="template_selected.color_set_2"></ui-colorpicker></div>
+                                    <div style="float:left;margin-left:20px;">Hexadecimal value: <input ng-model='template_selected.color_set_2' class="autoSaveTemplate" /></div>
+                                </div>
+                                <br class="clr" />
+                            </div>
+
+                            <div class="design_element_row">
+                                <div class="name">
+                                    Color set 3:
+                                </div>
+                                <div class="data">
+                                    <div style="float:left;">Color: <ui-colorpicker ng-model="template_selected.color_set_3"></ui-colorpicker></div>
+                                    <div style="float:left;margin-left:20px;">Hexadecimal value: <input ng-model='template_selected.color_set_3' class="autoSaveTemplate" /></div>
+                                </div>
+                                <br class="clr" />
+                            </div>
+
+                            <div class="design_element_row">
+                                <div class="name">
+                                    Clock text color:
+                                </div>
+                                <div class="data">
+                                    <div style="float:left;">Color: <ui-colorpicker ng-model="template_selected.clock"></ui-colorpicker></div>
+                                    <div style="float:left;margin-left:20px;">Hexadecimal value: <input ng-model='template_selected.clock' class="autoSaveTemplate" /></div>
+                                </div>
+                                <br class="clr" />
+                            </div>
+
+                            <div class="design_element_row">
+                                <div class="name">
+                                    Main background (1920*1080): <br>
+                                    <label ng-show="template_selected.main_bg">Replace photo:</label>
+                                    <label ng-hide="template_selected.main_bg">Upload photo:</label>
+                                    <form id="main_bg_form" target="upload_target" method="post" enctype="multipart/form-data" action="ajax/uploadTemplateImg.php">
+                                        <input type="hidden" name="id" value="{{copyData.appCopyOrganizationID}}__{{copyData.appCopyID}}__main_bg" />
+                                        <input type="file" class="file" name="img" ng-file-select="onImgFileSelect($files,'main_bg')" />
+                                        <img class="loader" src="img/loader.gif" />
+                                    </form>
+                                </div>
+                                <div class="data">
+                                    <img src="{{template_selected.main_bg}}" />
+                                </div>
+                                <br class="clr" />
+                            </div>
+
+                            <div class="design_element_row">
+                                <div class="name">
+                                    Header Banner image (1280*120): <br>
+                                    <label ng-show="template_selected.header">Replace photo:</label>
+                                    <label ng-hide="template_selected.header">Upload photo:</label>
+                                    <form id="header_form" target="upload_target" method="post" enctype="multipart/form-data" action="ajax/uploadTemplateImg.php">
+                                        <input type="hidden" name="id" value="{{copyData.appCopyOrganizationID}}__{{copyData.appCopyID}}__header" />
+                                        <input type="file" class="file" name="img" ng-file-select="onImgFileSelect($files,'header')" />
+                                        <img class="loader" src="img/loader.gif" />
+                                    </form>
+                                </div>
+                                <div class="data">
+                                    <img src="{{template_selected.header}}" />
+                                </div>
+                                <br class="clr" />
+                            </div>
+
+                            <div class="design_element_row">
+                                <div class="name">
+                                    Cliff (400*1000): <br>
+                                    <label ng-show="template_selected.cliff">Replace photo:</label>
+                                    <label ng-hide="template_selected.cliff">Upload photo:</label>
+                                    <form id="cliff_form" target="upload_target" method="post" enctype="multipart/form-data" action="ajax/uploadTemplateImg.php">
+                                        <input type="hidden" name="id" value="{{copyData.appCopyOrganizationID}}__{{copyData.appCopyID}}__cliff" />
+                                        <input type="file" class="file" name="img" ng-file-select="onImgFileSelect($files,'cliff')" />
+                                        <img class="loader" src="img/loader.gif" />
+                                    </form>
+                                </div>
+                                <div class="data">
+                                    <img src="{{template_selected.cliff}}" />
+                                </div>
+                                <br class="clr" />
+                            </div>
+
+                            <div class="design_element_row">
+                                <div class="name">
+                                    Correct answer box (714*483): <br>
+                                    <label ng-show="template_selected.right_bg">Replace photo:</label>
+                                    <label ng-hide="template_selected.right_bg">Upload photo:</label>
+                                    <form id="right_bg_form" target="upload_target" method="post" enctype="multipart/form-data" action="ajax/uploadTemplateImg.php">
+                                        <input type="hidden" name="id" value="{{copyData.appCopyOrganizationID}}__{{copyData.appCopyID}}__right_bg" />
+                                        <input type="file" class="file" name="img" ng-file-select="onImgFileSelect($files,'right_bg')" />
+                                        <img class="loader" src="img/loader.gif" />
+                                    </form>
+                                </div>
+                                <div class="data">
+                                    <img src="{{template_selected.right_bg}}" />
+                                </div>
+                                <br class="clr" />
+                            </div>
+
+                            <div class="design_element_row">
+                                <div class="name">
+                                    Wrong answer box (714*483): <br>
+                                    <label ng-show="template_selected.false_bg">Replace photo:</label>
+                                    <label ng-hide="template_selected.false_bg">Upload photo:</label>
+                                    <form id="false_bg_form" target="upload_target" method="post" enctype="multipart/form-data" action="ajax/uploadTemplateImg.php">
+                                        <input type="hidden" name="id" value="{{copyData.appCopyOrganizationID}}__{{copyData.appCopyID}}__false_bg" />
+                                        <input type="file" class="file" name="img" ng-file-select="onImgFileSelect($files,'false_bg')" />
+                                        <img class="loader" src="img/loader.gif" />
+                                    </form>
+                                </div>
+                                <div class="data">
+                                    <img src="{{template_selected.false_bg}}" />
+                                </div>
+                                <br class="clr" />
+                            </div>
+
+                            <div class="design_element_row">
+                                <div class="name">
+                                    Climb icon (50*50): <br>
+                                    <label ng-show="template_selected.climb_icon">Replace photo:</label>
+                                    <label ng-hide="template_selected.climb_icon">Upload photo:</label>
+                                    <form id="climb_icon_form" target="upload_target" method="post" enctype="multipart/form-data" action="ajax/uploadTemplateImg.php">
+                                        <input type="hidden" name="id" value="{{copyData.appCopyOrganizationID}}__{{copyData.appCopyID}}__climb_icon" />
+                                        <input type="file" class="file" name="img" ng-file-select="onImgFileSelect($files,'climb_icon')" />
+                                        <img class="loader" src="img/loader.gif" />
+                                    </form>
+                                </div>
+                                <div class="data">
+                                    <img src="{{template_selected.climb_icon}}" />
+                                </div>
+                                <br class="clr" />
+                            </div>
+
+                            <div class="design_element_row">
+                                <div class="name">
+                                    Challenge icon (50*50): <br>
+                                    <label ng-show="template_selected.challenge_icon">Replace photo:</label>
+                                    <label ng-hide="template_selected.challenge_icon">Upload photo:</label>
+                                    <form id="challenge_icon_form" target="upload_target" method="post" enctype="multipart/form-data" action="ajax/uploadTemplateImg.php">
+                                        <input type="hidden" name="id" value="{{copyData.appCopyOrganizationID}}__{{copyData.appCopyID}}__challenge_icon" />
+                                        <input type="file" class="file" name="img" ng-file-select="onImgFileSelect($files,'challenge_icon')" />
+                                        <img class="loader" src="img/loader.gif" />
+                                    </form>
+                                </div>
+                                <div class="data">
+                                    <img src="{{template_selected.challenge_icon}}" />
+                                </div>
+                                <br class="clr" />
+                            </div>
+
+                        </div>
+
+                        <iframe id="upload_target_templates" name="upload_target" src="" style="width:0;height:0;border:0px solid #fff;"></iframe>
+            </tab>
+            <tab heading="Registration form">
+                <div class="reg_form_edit_wrap" ng-init="regFormEditInit()">
+                    <div style="font-size:12px;margin:3px 0px;" class="save_reg_form_text"></div>
+                    <div class="edit_area">
+                        <h4>Form settings</h4>
+                        <div class="design_element_row">
+                            <div class="name">
+                                Content:
+                            </div>
+                            <div class="data">
+                                <textarea ng-model="reg_form.content" style="height:80px;width:100%;" class="autoSaveRegForm"></textarea>
+                            </div>
+                            <br class="clr" />
+                        </div>
+                        <div class="design_element_row">
+                            <div class="name">
+                                Extra fields:
+                            </div>
+                            <div class="data">
+                                <input ng-model="new_field.name" ng-minlength=3 ng-maxlength=30 maxlength="30" required placeholder="Field name" type="text"  /><button type="button" ng-click="addRegFormField(new_reg_form_field)">Add</button>
+                                <div class="new_field" ng-repeat="field in extra_fields">{{field}} <a href="javascript:void(0)" ng-click="remove_extra_fields($index)">Remove</a></div>
+                                    
+                            </div>
+                            <br class="clr" />
+                        </div>
+                        <div class="design_element_row">
+                            <div class="name">
+                                Submit button text:
+                            </div>
+                            <div class="data">
+                                <input type="text" ng-model="reg_form.button" class="autoSaveRegForm" />
+                            </div>
+                            <br class="clr" />
+                        </div>
+                        <div class="design_element_row">
+                            <div class="name">
+                                Color set 1:
+                            </div>
+                            <div class="data">
+                                <div style="float:left;">Color: <ui-colorpicker ng-model="reg_form.color_set_1"></ui-colorpicker></div>
+                                <div style="float:left;margin-left:20px;">Hexadecimal value: <input ng-model='reg_form.color_set_1' class="color_value autoSaveRegForm" /></div>
+                            </div>
+                            <br class="clr" />
+                        </div>
+                        <div class="design_element_row">
+                            <div class="name">
+                                Color set 2:
+                            </div>
+                            <div class="data">
+                                <div style="float:left;">Color: <ui-colorpicker ng-model="reg_form.color_set_2"></ui-colorpicker></div>
+                                <div style="float:left;margin-left:20px;">Hexadecimal value: <input ng-model='reg_form.color_set_2' class="color_value autoSaveRegForm" /></div>
+                            </div>
+                            <br class="clr" />
+                        </div>
+                        <div class="design_element_row">
+                            <div class="name">
+                                Color set 3:
+                            </div>
+                            <div class="data">
+                                <div style="float:left;">Color: <ui-colorpicker ng-model="reg_form.color_set_3"></ui-colorpicker></div>
+                                <div style="float:left;margin-left:20px;">Hexadecimal value: <input ng-model='reg_form.color_set_3' class="color_value autoSaveRegForm" /></div>
+                            </div>
+                            <br class="clr" />
+                        </div>
+                        
+                        <h4 style="margin-top:15px;">Choose when the registration form will show up:</h4>
+                        
+                        <div class="design_element_row">
+                            <div class="name">
+                                
+                            </div>
+                            <div class="data">
+                                <div class="option radio">
+                                    <label>
+                                        <input type="radio" class="autoSaveChange" name="q_show" ng-model="reg_form.q_show" value="0" />
+                                        Before the game start
+                                    </label>
+                                </div>
+                                <div class="option radio">
+                                    <label>
+                                        <input type="radio" class="autoSaveChange" name="q_show" ng-model="reg_form.q_show" value="3" />
+                                        After 3 questions
+                                    </label>
+                                </div>
+                            </div>
+                            <br class="clr" />
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                    </div>
+                    <div class="preview_area">
+                        <h4>Preview</h4>
+                        <div class="reg_form_preview" style="background-color:{{reg_form.color_set_1}};border:2px solid {{reg_form.color_set_3}};color:{{reg_form.color_set_2}}">
+                            <div style="margin-bottom:30px;">
+                                {{reg_form.content}}
+                            </div>
+                            <div class="form_row">
+                                <label>First name:</label>
+                                <input type="text" />
+                                <br class="clr">
+                            </div>
+                            <div class="form_row">
+                                <label>Last name:</label>
+                                <input type="text" />
+                                <br class="clr">
+                            </div>
+                            <div class="form_row">
+                                <label>Email address:</label>
+                                <input type="text" />
+                                <br class="clr">
+                            </div>
+                            
+                            <div class="form_row" ng-repeat="field in extra_fields">
+                                <label>{{field}}:</label>
+                                <input type="text" />
+                                <br class="clr">
+                            </div>
+                            
+                            <div style="margin-top:30px;"><button style="background-color:{{reg_form.color_set_3}};color:{{reg_form.color_set_1}};border:0px;padding:4px 20px;display:block;position:relative;margin:0px auto;" type="button">{{reg_form.button}}</button></div>
+                        </div>
+                    </div>
+                    <br class="clr" />
+                </div>
+            </tab>
+            
+            <tab heading="Instructions">
+                <div class="">
+                    <button type="button" ng-click="loadRegularInst()">Load Current</button>
+                    <textarea id="instructions_edit" ng-bind-html-unsafe="editData.game.instructions" ng-init="initCK('instructions_edit')">
+                        
+                    </textarea>
+                </div>
+                     
+            </tab>
+       </tabset>
+    </div>
+
+    
+
+</div>
+<style>
+    
+    .reg_form_preview {
+        width:476px;
+        padding:10px;
+        font-size:16px;
+    }
+    
+    .form_row {
+        width:300px;
+        border:0px solid black;
+        line-height:24px;
+        margin-top:15px;
+    }
+    
+    .form_row label {
+        width:100px;
+        float:left;
+    }
+    
+    .form_row input {
+        width:180px;
+        float:right;
+        height:24px;
+        line-height:24px;
+    }
+    
+    
+    .reg_form_edit_wrap .design_element_row .name {
+        width:150px;
+    }
+    
+    .reg_form_edit_wrap .design_element_row .data {
+        width:350px;
+    }
+    
+    .reg_form_edit_wrap .design_element_row .data .color_value{
+        width:60px;
+    }
+    
+    .reg_form_edit_wrap {
+        
+    }
+    
+    .reg_form_edit_wrap .edit_area {
+        float:left;
+        width:500px;
+
+    }
+    
+    .reg_form_edit_wrap .preview_area {
+        float:right;
+        width:500px;
+    }
+    
+    .create_new_template {
+        height:24px;
+        line-height:24px;
+        padding:0px 10px;
+        display:block;
+        float:right;
+        font-size:14px;
+        border:1px solid #0088CC;
+        margin-top:8px;
+    }
+    
+    .template_parts .note {
+      font-size:12px;
+      margin:3px 0px;
+    }
+    
+    .template_parts .note.red {
+        color:red;
+    }
+    
+    .general_details {
+        margin:10px 0px;
+    }
+    
+    #m_email {
+        margin:5px 0px;
+        width:730px;
+    }
+    
+    h4 {
+        margin:5px 0px;
+    }
+    
+    .questions_wrap.waiting_for_approval,
+    .questions_wrap.waiting_for_approval .q_wrap {
+        border-color:red;
+    }
+
+    
+</style>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+        <!--[if lt IE 9]>
+                <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+        <![endif]-->
+        
+        <title>Wheeldo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+        <!-- Le styles -->
+        <link href="css/style.css" media="screen" rel="stylesheet" type="text/css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/jquery1.9.1.js"></script>
+        <script type="text/javascript">
+            var DATA_PATH="http://localhost/new_ux_html/";
+            //DATA_PATH="http://my.wheeldo.com/new_ux/";
+            var userID=71;
+        </script>
+        <script type="text/javascript" src="js/custom.js"></script>
+        <script type="text/javascript" src="js/ajax.js"></script>
+        
+<!--        fancybox-->
+        <link rel="stylesheet" href="plugins/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" media="screen" />
+        <script type="text/javascript" src="plugins/fancybox/jquery.fancybox.pack.js?v=2.1.4"></script>
+<!--        end fancybox--> 
+
+        <link rel="stylesheet" href="css/wheeldoSlider.css" type="text/css" media="screen" />
+        <script type="text/javascript" src="js/wheeldoSlider.js"></script>
+        
+<!--        ui-->
+
+       <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+       <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+<!--       end ui  -->
+
+        <script type="text/javascript" src="js/customfile.js"></script>
+        
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="header">
+                <div class="logo">
+                    <img src="img/logo.png" alt="logo" />
+                </div>
+                <div class="top_right">
+                    <div class="user">
+                        aviadblu@gmail.com
+                        <img src="img/drop_down_icon.png" />
+                    </div>
+                    <div class="saparetor"></div>
+                    <div>
+                        <a href="javascript:void(0)"><img src="img/settings_icon.png" />&nbsp;<img src="img/drop_down_icon.png" /></a>
+                    </div>
+                    <div class="saparetor"></div>
+                    <div>
+                        <a href="javascript:void(0)"><img src="img/help_icon.png" /></a>
+                    </div>   
+                </div>
+            </div>
+            <div id="content">
+                <div class="right_info">
+                    <div class="padding10_8">
+                        <div class="expand_view">
+                            Expand View
+                        </div>
+                        <h4>News feed</h4>
+                        <div id="news">
+<!--                                    ajax news    -->                            
+                        </div>
+                        
+                        <h4>Logs</h4>
+                        <div id="logs">
+                            <input type="text" class="search autoTxT" id="search_logs" title="Type to search" />
+                            <select id="logs_game" class="nooutline">
+                                <option value="0">All games</option>
+                            </select>
+                            <br class="clr" />
+                            <div id="logs_ajax">
+<!--                                ajax logs-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="data">
+<!--                    search bar -->
+                    <div class="search_bar">
+                        <input type="text" class="search app_search autoTxT" id="search_app" title="Type to search" />
+                        <select id="app_category" class="nooutline">
+                            <option value="0">All game categories</option>
+                        </select>
+                    </div>
+<!--                    search bar end -->
+                    <div id="apps_ajax">
+<!--                        ajax apps-->
+                    </div>           
+                </div>
+                <br class="clr" />
+            </div>
+        </div>
+        <div id="fadeBg">
+            <div class="popupWrap">
+                <div class="close"></div>
+                <div id="popUpData">
+                    test
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

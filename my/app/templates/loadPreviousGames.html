@@ -1,0 +1,16 @@
+<form  name="q_form">
+<div id="loadPreviousModal" class="addEditQuestion" ng-init="initCtrl();" ng-cloak="testMe()">
+    <h3>Load previous game</h3>
+    <div class="dataWrap scroll-pane">
+        <div class="previous_game game_prev_{{copy.id}}" ng-repeat="copy in copies" copyID="{{copy.id}}" repeat-done="initData()">
+            {{copy.id}}. {{copy.name}}
+        </div>
+    </div>
+    <div class="actions_wrap" content-load="contentLoad()">
+         <button type="button" class="system_button blue_button" style="float:left;" ng-click="cancel()">Cancel</button>
+         <button type="button" class="system_button green_button" style="float:right;" ng-click="applyLoadPrev()">Apply</button>
+         <br class="clr" />
+    </div>
+    
+</div>
+</form>

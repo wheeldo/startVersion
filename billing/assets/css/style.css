@@ -1,0 +1,41 @@
+div {
+    position:relative;
+    margin:0px auto;
+}
+
+.login .content {
+    width:400px;
+    margin-top:100px;
+}
+
+
+.login .alert {
+    margin-top:20px;
+    display:none;
+}
+
+
+
+.tests .content {
+    width:400px;
+    margin-top:100px;
+}
+
+
+.tests .alert {
+    margin-top:20px;
+    display:none;
+}
+
+.success {
+    color:green;
+}
+
+.error {
+    color:red;
+}
+
+.packages_wrap {
+    border:0px solid gray;
+    height:200px;
+}

@@ -1,0 +1,127 @@
+<div class="app_edit_container dailyInsight" ng-init="initDailyInsight()"> 
+    <div class="nav_top">
+        
+        <a href="javascript:void(0);" class="add" ng-click="addPlayerToGame()" ng-show="showAddPlayer">Add player</a>
+        <a href="javascript:void(0);" class="team" ng-click="teamOptionsOpen()" ng-show="copyData.appCopyTerminate==0">Resend invitation</a>
+        <a href="javascript:void(0);" class="load" ng-click="loadPreviousGames()">Load previous game</a>
+        <br class="clr" />
+    </div>
+    <div class="dataBlock">
+        <h4>Write the topic you would like to talk about with your team: </h4> 
+        <input class="input autoSave" type="text" placeholder="e.g What is the best practice for sharing knowledge" name="description" ng-model="editData.game.title" id="description" ng-minlength=3 ng-maxlength=80 maxlength="80" required ng-focus /> <img class="help" src="/img/help_icon30_30.png" popover='The topic will appear at the top of the game page. Your team will be able to share their insights based on this topic.'  popover-placement="right" popover-trigger="mouseenter" />
+    </div>
+    
+    <div class="dataBlock">
+        <h4>Admin Email address:</h4>
+        <input class="input autoSave" type="email" placeholder="e.g.:user@server.com" name="description" ng-model="editData.game.mail" id="description" ng-minlength=3 ng-maxlength=80 maxlength="80" required ng-focus /> <img class="help" src="/img/help_icon30_30.png" popover='New insights that your game participants will create will be sent to this email address for approval'  popover-placement="right" popover-trigger="mouseenter" />
+    </div>
+    
+    <label class="checkbox">
+        <input class="autoSaveChange" type="checkbox" ng-model="editData.game.auto_insight_active" ng-true-value="1" ng-false-value="0">
+        Daily insight E-mails
+    </label>
+    
+    <div class="dataBlock">
+        <h4>Email schedule: 
+        <select ng-disabled="editData.game.auto_insight_active==0" id="selInterval" class="autoSaveChange" name="interval" ng-model="editData.game.interval">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+            <option>13</option>
+            <option>14</option>
+            <option>15</option>
+            <option>16</option>
+            <option>17</option>
+            <option>18</option>
+            <option>19</option>
+            <option>20</option>
+            <option>21</option>
+            <option>22</option>
+            <option>23</option>
+            <option>24</option>
+        </select>
+        hours <img class="help" src="/img/help_icon30_30.png" popover='A new insight will be sent to each player according to the time interval you scheduled.'  popover-placement="right" popover-trigger="mouseenter" />
+        </h4>
+    </div>
+    <hr />
+    <h5>Insights:</h5>
+    <div style="margin:10px 0px;">
+        <a href="javascript:void(0);" class="add" ng-click="addnewInsight()">Add a new insight</a>
+    </div>
+    <div class="questions_wrap">
+        
+        <div class="q_wrap insight" ng-repeat="insight in editData.insights" ng-class="{wait_for_approve:insight.data.status==0}">
+            <div class="in_data">
+                <div class="insight_headline">{{insight.data.headline}} <span ng-show="insight.data.uid!=0">(By {{insight.user_data[0].user_name}})</span></div>
+                <div class="insight_content">{{insight.data.article}}</div>
+            </div>
+            
+            <span class="remove" ng-show="insight.data.status==0"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="approveQDailyInsight($index)">Approve</a></span>
+            <span class="remove"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="removeQDailyInsight($index,true)">Remove</a></span>
+            <span class="edit"><a href="javascript:void(0);" q_id="{{q.q_data.id}}" ng-click="editQDailyInsight($index,true)">Edit</a></span>
+            <br class="clr" />
+        </div>
+        
+        <br class="clr" />
+    </div>
+    
+</div>
+
+
+<style type="text/css">
+    h4 {
+        margin-bottom:5px;
+    }
+    h5 {
+        margin-bottom:10px;
+        text-decoration:underline;
+        font-size:20px;
+    }
+    .insights_wrap {
+       border-top:1px solid #D5D5D5;
+    }
+    
+    .insight {
+        border-bottom:1px solid #D5D5D5;
+        padding:5px 0px;
+    }
+    
+    .insight .insight_headline {
+        font-weight:bold;
+        text-decoration:underline;
+
+    }
+    
+    .insight .in_data {
+        float:left;
+    }
+    
+    .insight .insight_content {
+
+    }
+    
+    div.dataBlock {
+        display:block;
+        float:none;
+        margin:20px 0px;
+    }
+    
+    div.dataBlock .input {
+        height:30px;
+        line-height:30px;
+        width:400px;
+    }
+    
+    #selInterval {
+        width:50px;
+    }
+</style>
